@@ -1,0 +1,16 @@
+{
+  "name": "PhotoDays",
+  "short_name": "PhotoDays",
+  "description": "A private visual progress tracker for iPhone and iPad.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f7f5",
+  "theme_color": "#17151d",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

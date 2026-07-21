@@ -1,0 +1,184 @@
+---
+import { Picture } from 'astro:assets';
+import appIcon from '../assets/app-icon.png';
+import beforeImage from '../assets/demo/before.jpg';
+import afterImage from '../assets/demo/after.jpg';
+import homeScreen from '../assets/screens/home.png';
+import cameraScreen from '../assets/screens/camera.png';
+import compareScreen from '../assets/screens/compare.png';
+import videoScreen from '../assets/screens/video.png';
+import streakScreen from '../assets/screens/streak.png';
+import settingsScreen from '../assets/screens/settings.png';
+import type { SiteLanguage } from '../config';
+import { copy } from '../data/site';
+import AppStoreCTA from './AppStoreCTA.astro';
+import Footer from './Footer.astro';
+import Header from './Header.astro';
+import PhoneFrame from './PhoneFrame.astro';
+
+interface Props { lang: SiteLanguage }
+const { lang } = Astro.props;
+const t = copy[lang];
+const privacyHref = lang === 'ru' ? '/ru/privacy/' : '/privacy/';
+const stepScreens = [cameraScreen, compareScreen, videoScreen];
+const stepAlts = lang === 'ru'
+	? ['Камера PhotoDays с направляющими', 'Режим сравнения фотографий PhotoDays', 'Создание видео прогресса в PhotoDays']
+	: ['PhotoDays camera with alignment guides', 'PhotoDays photo comparison mode', 'Creating a progress video in PhotoDays'];
+---
+
+<Header lang={lang} home />
+
+<main id="main-content">
+	<section class="hero section-shell" aria-labelledby="hero-title">
+		<div class="hero-copy">
+			<div class="eyebrow">{t.hero.eyebrow}</div>
+			<h1 id="hero-title">{t.hero.title}</h1>
+			<p class="hero-body">{t.hero.body}</p>
+			<div class="hero-actions">
+				<AppStoreCTA lang={lang} />
+				<span class="privacy-note"><span aria-hidden="true">⌁</span>{t.hero.note}</span>
+			</div>
+			<div class="promise-row" aria-label={lang === 'ru' ? 'Основные возможности' : 'Core benefits'}>
+				<span>{t.steps.items[0].title}</span>
+				<span>{t.steps.items[1].title}</span>
+				<span>{t.steps.items[2].title}</span>
+			</div>
+		</div>
+
+		<div class="hero-visual" aria-label={lang === 'ru' ? 'Экраны приложения PhotoDays' : 'PhotoDays app screens'}>
+			<div class="hero-glow" aria-hidden="true"></div>
+			<PhoneFrame src={compareScreen} alt={lang === 'ru' ? 'Экран сравнения PhotoDays' : 'PhotoDays comparison screen'} class="hero-phone hero-phone-back" />
+			<PhoneFrame src={homeScreen} alt={lang === 'ru' ? 'Главный экран PhotoDays' : 'PhotoDays home screen'} class="hero-phone hero-phone-front" priority />
+			<div class="icon-orbit" aria-hidden="true">
+				<Picture src={appIcon} formats={['avif', 'webp']} widths={[96, 192]} alt="" />
+			</div>
+		</div>
+	</section>
+
+	<section class="comparison section-shell" aria-labelledby="comparison-title">
+		<div class="section-heading narrow">
+			<div class="eyebrow">{t.compare.eyebrow}</div>
+			<h2 id="comparison-title">{t.compare.title}</h2>
+			<p>{t.compare.body}</p>
+		</div>
+		<div class="compare-card" data-compare style="--split: 50%">
+			<div class="compare-media">
+				<Picture src={afterImage} formats={['avif', 'webp']} widths={[640, 960, 1280]} sizes="(max-width: 800px) 92vw, 900px" alt={lang === 'ru' ? 'Последняя фотография демонстрационной серии' : 'Latest photo in the demonstration series'} />
+				<div class="compare-before" data-compare-before>
+					<div class="compare-before-inner">
+						<Picture src={beforeImage} formats={['avif', 'webp']} widths={[640, 960, 1280]} sizes="(max-width: 800px) 92vw, 900px" alt={lang === 'ru' ? 'Первая фотография демонстрационной серии' : 'First photo in the demonstration series'} />
+					</div>
+				</div>
+				<div class="compare-line" aria-hidden="true"><span>↔</span></div>
+				<span class="compare-label compare-label-before">{t.compare.before}</span>
+				<span class="compare-label compare-label-after">{t.compare.after}</span>
+			</div>
+			<label class="compare-control">
+				<span>{t.compare.label}</span>
+				<input data-compare-range type="range" min="10" max="90" value="50" aria-valuetext="50%" />
+			</label>
+		</div>
+	</section>
+
+	<section class="steps section-shell" id="how" aria-labelledby="steps-title">
+		<div class="section-heading centered">
+			<div class="eyebrow">{t.steps.eyebrow}</div>
+			<h2 id="steps-title">{t.steps.title}</h2>
+		</div>
+		<div class="steps-grid">
+			{t.steps.items.map((item, index) => (
+				<article class="step-card">
+					<div class="step-copy">
+						<span class="step-number">0{index + 1}</span>
+						<h3>{item.title}</h3>
+						<p>{item.body}</p>
+					</div>
+					<PhoneFrame src={stepScreens[index]} alt={stepAlts[index]} class="step-phone" />
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="uses section-shell" aria-labelledby="uses-title">
+		<div class="uses-card">
+			<div class="uses-copy">
+				<div class="eyebrow">{t.uses.eyebrow}</div>
+				<h2 id="uses-title">{t.uses.title}</h2>
+				<p>{t.uses.body}</p>
+			</div>
+			<ul class="use-list" role="list">
+				{t.uses.items.map((item, index) => <li><span aria-hidden="true">{['◒', '◎', '↗', '⌁', '✦', '＋'][index]}</span>{item}</li>)}
+			</ul>
+		</div>
+	</section>
+
+	<section class="features section-shell" id="features" aria-labelledby="features-title">
+		<h2 class="visually-hidden" id="features-title">{t.nav.features}</h2>
+		<div class="feature-block feature-consistency">
+			<div class="feature-copy">
+				<div class="eyebrow">{t.consistency.eyebrow}</div>
+				<h2>{t.consistency.title}</h2>
+				<p>{t.consistency.body}</p>
+				<ul class="check-list" role="list">
+					{t.consistency.points.map((point) => <li><span aria-hidden="true">✓</span>{point}</li>)}
+				</ul>
+			</div>
+			<PhoneFrame src={streakScreen} alt={lang === 'ru' ? 'Экран серий и достижений PhotoDays' : 'PhotoDays streaks and achievements screen'} class="feature-phone" />
+		</div>
+
+		<div class="feature-block feature-video">
+			<PhoneFrame src={videoScreen} alt={lang === 'ru' ? 'Экран создания видео PhotoDays' : 'PhotoDays progress video screen'} class="feature-phone" />
+			<div class="feature-copy">
+				<div class="eyebrow">{t.video.eyebrow}</div>
+				<h2>{t.video.title}</h2>
+				<p>{t.video.body}</p>
+				<div class="format-row" aria-label={lang === 'ru' ? 'Форматы экспорта' : 'Export formats'}>
+					<span>VIDEO</span><span>GIF</span><span>4K</span><span>0.5–20×</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="feature-block feature-privacy">
+			<div class="feature-copy">
+				<div class="eyebrow">{t.privacy.eyebrow}</div>
+				<h2>{t.privacy.title}</h2>
+				<p>{t.privacy.body}</p>
+				<ul class="check-list" role="list">
+					{t.privacy.points.map((point) => <li><span aria-hidden="true">✓</span>{point}</li>)}
+				</ul>
+				<a class="text-link" href={privacyHref}>{t.privacy.link}<span aria-hidden="true">→</span></a>
+			</div>
+			<PhoneFrame src={settingsScreen} alt={lang === 'ru' ? 'Настройки приватности и виджетов PhotoDays' : 'PhotoDays privacy and widget settings'} class="feature-phone" />
+		</div>
+	</section>
+
+	<section class="final-cta section-shell" aria-labelledby="final-title">
+		<div class="final-card">
+			<div class="final-icon">
+				<Picture src={appIcon} formats={['avif', 'webp']} widths={[112, 224]} alt="PhotoDays app icon" />
+			</div>
+			<div class="eyebrow">{t.final.eyebrow}</div>
+			<h2 id="final-title">{t.final.title}</h2>
+			<p>{t.final.body}</p>
+			<AppStoreCTA lang={lang} />
+		</div>
+	</section>
+</main>
+
+<Footer lang={lang} />
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-compare]').forEach((compare) => {
+		const range = compare.querySelector<HTMLInputElement>('[data-compare-range]');
+		if (!range) return;
+
+		const update = () => {
+			const value = `${range.value}%`;
+			compare.style.setProperty('--split', value);
+			range.setAttribute('aria-valuetext', value);
+		};
+
+		range.addEventListener('input', update);
+		update();
+	});
+</script>

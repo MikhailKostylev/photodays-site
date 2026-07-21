@@ -1,0 +1,37 @@
+---
+import ContentLayout from '../../../layouts/ContentLayout.astro';
+import { siteConfig } from '../../../config';
+---
+
+<ContentLayout
+	lang="ru"
+	title="Поддержка — PhotoDays"
+	description="Свяжитесь с поддержкой PhotoDays, сообщите об ошибке или узнайте, какие диагностические данные прикладываются к обращению."
+	canonicalPath="/ru/support/"
+	enPath="/support/"
+	ruPath="/ru/support/"
+	eyebrow="Мы готовы помочь"
+	heading="Поддержка PhotoDays"
+>
+	<p class="lead">Нужна помощь, нашли ошибку или хотите задать вопрос о PhotoDays? Выберите подходящую тему сообщения.</p>
+
+	<div class="support-actions">
+		<a class="support-action" href={`mailto:${siteConfig.supportEmail}?subject=PhotoDays%20Support%20Request`}>
+			<span class="support-action-icon" aria-hidden="true">?</span>
+			<span><strong>Обратиться в поддержку</strong><small>Помощь с приложением, покупками, синхронизацией или настройками</small></span>
+			<span aria-hidden="true">→</span>
+		</a>
+		<a class="support-action" href={`mailto:${siteConfig.supportEmail}?subject=PhotoDays%20Bug%20Report`}>
+			<span class="support-action-icon" aria-hidden="true">!</span>
+			<span><strong>Сообщить об ошибке</strong><small>Опишите, что произошло и какого результата вы ожидали</small></span>
+			<span aria-hidden="true">→</span>
+		</a>
+	</div>
+
+	<h2>Диагностическое вложение</h2>
+	<p>При отправке обращения из PhotoDays приложение может прикрепить небольшой текстовый файл с технической информацией, которая помогает найти причину проблемы. Он может содержать версии приложения и iOS, модель устройства, случайный идентификатор поддержки, статус синхронизации iCloud, объём локального хранилища, язык, тему и часовой пояс.</p>
+	<div class="notice">Вложение не содержит фотографии, видео, заметки, альбомы, адрес электронной почты или номер телефона. Перед отправкой вы можете удалить его из письма.</div>
+
+	<h2>Почта поддержки</h2>
+	<p>Также можно написать напрямую на <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>.</p>
+</ContentLayout>

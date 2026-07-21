@@ -1,0 +1,29 @@
+---
+import AppStoreCTA from '../components/AppStoreCTA.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	lang="en"
+	title="Page not found — PhotoDays"
+	description="The requested PhotoDays page could not be found."
+	canonicalPath="/404.html"
+	enPath="/404.html"
+	ruPath="/404.html"
+>
+	<Header lang="en" />
+	<main id="main-content" class="not-found section-shell">
+		<div class="not-found-card">
+			<div class="eyebrow">404</div>
+			<h1>This moment isn’t in the album.</h1>
+			<p>The page may have moved, but your next progress photo is still waiting.</p>
+			<div class="not-found-actions">
+				<a class="button-link" href="/">Back to PhotoDays</a>
+				<AppStoreCTA lang="en" />
+			</div>
+		</div>
+	</main>
+	<Footer lang="en" />
+</BaseLayout>

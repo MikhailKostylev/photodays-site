@@ -1,0 +1,39 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import { siteConfig } from '../../config';
+---
+
+<ContentLayout
+	lang="en"
+	title="Terms of Use — PhotoDays"
+	description="Terms and product-specific information for using PhotoDays on iPhone and iPad."
+	canonicalPath="/terms/"
+	enPath="/terms/"
+	ruPath="/ru/terms/"
+	heading="Terms of Use"
+	effective="Effective July 21, 2026"
+>
+	<p>PhotoDays is distributed through the Apple App Store by an independent developer. Your license to use PhotoDays is governed by Apple’s <a href={siteConfig.appleEulaUrl} rel="noopener">Standard Licensed Application End User License Agreement (Standard EULA)</a>.</p>
+	<div class="notice"><strong>Important:</strong> This page provides product-specific information and does not replace or modify Apple’s Standard EULA.</div>
+
+	<h2>Using PhotoDays</h2>
+	<p>You may use PhotoDays to create and manage your own visual progress journals. You are responsible for the content you add and for having the rights and permissions necessary to capture, import, store and share it. PhotoDays does not claim ownership of your photos, videos, notes or other user content.</p>
+
+	<h2>Subscriptions and purchases</h2>
+	<p>PhotoDays may offer premium subscriptions or other in-app purchases. The price, duration and included features are displayed in the app before you confirm a purchase. Payments are processed by Apple using your Apple ID. You can manage or cancel subscriptions in your Apple account settings and restore eligible purchases from within the app.</p>
+
+	<h2>Acceptable use</h2>
+	<p>Do not use PhotoDays unlawfully, attempt to interfere with the app or its services, bypass purchase or security mechanisms, or use the app to violate another person’s privacy or intellectual-property rights.</p>
+
+	<h2>Health information</h2>
+	<p>PhotoDays is a visual journaling and progress-tracking tool. It does not provide medical advice, diagnosis or treatment. Consult a qualified professional for health-related decisions.</p>
+
+	<h2>Availability and changes</h2>
+	<p>We may improve, change or discontinue features as the product evolves. Availability can also depend on your device, operating-system version, Apple services and network connection.</p>
+
+	<h2>Privacy</h2>
+	<p>Our <a href="/privacy/">Privacy Policy</a> explains how PhotoDays processes information.</p>
+
+	<h2>Contact</h2>
+	<p>Questions about these terms can be sent to <a href={`mailto:${siteConfig.supportEmail}?subject=PhotoDays%20Terms`}>{siteConfig.supportEmail}</a>.</p>
+</ContentLayout>

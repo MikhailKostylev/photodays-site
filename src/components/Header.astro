@@ -1,0 +1,39 @@
+---
+import { Picture } from 'astro:assets';
+import appIcon from '../assets/app-icon.png';
+import type { SiteLanguage } from '../config';
+import { copy } from '../data/site';
+import AppStoreCTA from './AppStoreCTA.astro';
+
+interface Props {
+	lang: SiteLanguage;
+	home?: boolean;
+	alternateHref?: string;
+}
+
+const { lang, home = false, alternateHref } = Astro.props;
+const t = copy[lang];
+const root = lang === 'ru' ? '/ru/' : '/';
+const otherLang = lang === 'ru' ? 'EN' : 'RU';
+const otherHref = alternateHref ?? (lang === 'ru' ? '/' : '/ru/');
+const sectionHref = (id: string) => home ? `#${id}` : `${root}#${id}`;
+---
+
+<header class="site-header">
+	<div class="header-inner">
+		<a class="brand" href={root} aria-label="PhotoDays home">
+			<Picture src={appIcon} formats={['avif', 'webp']} widths={[48, 96]} alt="" class="brand-icon" />
+			<span>PhotoDays</span>
+		</a>
+		<nav class="desktop-nav" aria-label={lang === 'ru' ? 'Основная навигация' : 'Main navigation'}>
+			<a href={sectionHref('how')}>{t.nav.how}</a>
+			<a href={sectionHref('features')}>{t.nav.features}</a>
+			<a href={lang === 'ru' ? '/ru/privacy/' : '/privacy/'}>{t.nav.privacy}</a>
+			<a href={lang === 'ru' ? '/ru/support/' : '/support/'}>{t.nav.support}</a>
+		</nav>
+		<div class="header-actions">
+			<a class="language-link" href={otherHref} hreflang={lang === 'ru' ? 'en' : 'ru'} lang={lang === 'ru' ? 'en' : 'ru'}>{otherLang}</a>
+			<AppStoreCTA lang={lang} compact />
+		</div>
+	</div>
+</header>

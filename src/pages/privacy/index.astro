@@ -1,0 +1,58 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import { siteConfig } from '../../config';
+---
+
+<ContentLayout
+	lang="en"
+	title="Privacy Policy — PhotoDays"
+	description="Learn how the PhotoDays iOS and iPadOS app processes photos, progress data, analytics, diagnostics and support information."
+	canonicalPath="/privacy/"
+	enPath="/privacy/"
+	ruPath="/ru/privacy/"
+	heading="Privacy Policy"
+	effective="Effective July 19, 2026"
+>
+	<p>PhotoDays is provided by an independent developer (“PhotoDays”, “we”, “us”). This policy explains what information the PhotoDays app and website process, why it is processed and the choices available to you.</p>
+
+	<h2>Information you add to PhotoDays</h2>
+	<p>Photos, videos, notes, albums, goals, reminders and related progress data are stored on your device. If you enable iCloud Sync, this content is synced through your private Apple iCloud account using CloudKit so it can be available on your Apple devices. We do not operate an account system for this content.</p>
+
+	<h2>Analytics and diagnostics</h2>
+	<p>PhotoDays may send limited product analytics and crash diagnostics to help us understand feature usage, reliability and performance. This can include app and build version, device model, operating-system version, locale, selected app language and theme, premium status, feature interactions, a random session identifier and technical error context.</p>
+	<p>We use <a href="https://amplitude.com/privacy" rel="noopener">Amplitude</a> for product analytics and <a href="https://sentry.io/privacy/" rel="noopener">Sentry</a> for crash and error diagnostics. PhotoDays is configured not to intentionally send photos, videos, notes, file paths, email addresses, phone numbers or other free-form user content to these services. Sentry is configured not to send default personally identifiable information.</p>
+
+	<h2>Support messages</h2>
+	<p>If you contact support, we receive the email address and message you choose to send. Bug reports and support requests can also include a text attachment with non-content diagnostics: app version, operating-system version, device model, a random support identifier, iCloud sync status, local storage usage, app language, theme and time zone. The attachment does not include photos, videos, notes or albums.</p>
+
+	<h2>PhotoDays website</h2>
+	<p>This website does not use analytics, advertising cookies, account registration or email collection. It is hosted by GitHub Pages. GitHub may log a visitor’s IP address for security purposes. See the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub Privacy Statement</a> for details.</p>
+
+	<h2>Photos, camera, notifications and biometrics</h2>
+	<p>PhotoDays requests access only when you use a feature that needs it. Camera and photo-library access let you capture, import, save and display media. Notification access is used for reminders and related app experiences. Biometric authentication is performed by iOS; PhotoDays receives only the authentication result and does not receive or store Face ID or Touch ID data.</p>
+
+	<h2>Purchases</h2>
+	<p>Purchases and subscriptions are processed by Apple through StoreKit. We receive transaction and entitlement information needed to unlock purchased features, but we do not receive your full payment-card details.</p>
+
+	<h2>How information is used and shared</h2>
+	<p>We use information only to provide app features, sync your content when requested, process purchases, respond to support, maintain security, diagnose failures and improve PhotoDays. We do not sell your personal information. Information is shared only with Apple and the service providers described above as needed for these purposes or when required by law.</p>
+
+	<h2>Retention and deletion</h2>
+	<p>Local app content remains until you delete it or remove the app. iCloud content is controlled through your Apple account and the app’s sync features. Support correspondence and service diagnostics are retained only as long as reasonably necessary for support, security, legal and product-improvement purposes. You can ask us to delete support information associated with your email address.</p>
+
+	<h2>Your choices</h2>
+	<ul>
+		<li>You can deny or revoke camera, photo-library, notification and biometric permissions in iOS Settings.</li>
+		<li>You can keep iCloud Sync disabled and use PhotoDays only on your device.</li>
+		<li>You can delete content in the app and contact us about support information.</li>
+	</ul>
+
+	<h2>Children</h2>
+	<p>PhotoDays is not directed to children under 13, and we do not knowingly collect personal information from children under 13.</p>
+
+	<h2>Changes to this policy</h2>
+	<p>We may update this policy when PhotoDays or its service providers change. The effective date above will be updated when changes are published.</p>
+
+	<h2>Contact</h2>
+	<p>For privacy questions or deletion requests, email <a href={`mailto:${siteConfig.supportEmail}?subject=PhotoDays%20Privacy`}>{siteConfig.supportEmail}</a>.</p>
+</ContentLayout>

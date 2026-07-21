@@ -1,0 +1,37 @@
+---
+import type { SiteLanguage } from '../config';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+	lang: SiteLanguage;
+	title: string;
+	description: string;
+	canonicalPath: string;
+	enPath: string;
+	ruPath: string;
+	eyebrow?: string;
+	heading: string;
+	effective?: string;
+}
+
+const { lang, title, description, canonicalPath, enPath, ruPath, eyebrow = 'PhotoDays', heading, effective } = Astro.props;
+---
+
+<BaseLayout {lang} {title} {description} {canonicalPath} {enPath} {ruPath}>
+	<Header {lang} alternateHref={lang === 'ru' ? enPath : ruPath} />
+	<main id="main-content" class="content-main section-shell">
+		<article class="content-card">
+			<header class="content-heading">
+				<div class="eyebrow">{eyebrow}</div>
+				<h1>{heading}</h1>
+				{effective && <p class="effective-date">{effective}</p>}
+			</header>
+			<div class="prose">
+				<slot />
+			</div>
+		</article>
+	</main>
+	<Footer {lang} />
+</BaseLayout>

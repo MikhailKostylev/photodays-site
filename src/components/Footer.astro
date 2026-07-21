@@ -1,0 +1,30 @@
+---
+import { Picture } from 'astro:assets';
+import appIcon from '../assets/app-icon.png';
+import { siteConfig, type SiteLanguage } from '../config';
+import { copy } from '../data/site';
+
+interface Props { lang: SiteLanguage }
+const { lang } = Astro.props;
+const t = copy[lang].footer;
+const root = lang === 'ru' ? '/ru/' : '/';
+---
+
+<footer class="site-footer">
+	<div class="footer-main">
+		<div>
+			<a class="brand footer-brand" href={root}>
+				<Picture src={appIcon} formats={['avif', 'webp']} widths={[40, 80]} alt="" class="brand-icon" />
+				<span>PhotoDays</span>
+			</a>
+			<p>{t.tagline}</p>
+		</div>
+		<nav aria-label={lang === 'ru' ? 'Ссылки в подвале' : 'Footer links'}>
+			<a href={lang === 'ru' ? '/ru/privacy/' : '/privacy/'}>{t.privacy}</a>
+			<a href={lang === 'ru' ? '/ru/terms/' : '/terms/'}>{t.terms}</a>
+			<a href={lang === 'ru' ? '/ru/support/' : '/support/'}>{t.support}</a>
+			<a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>
+		</nav>
+	</div>
+	<div class="footer-bottom">© 2026 PhotoDays</div>
+</footer>

@@ -1,0 +1,37 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import { siteConfig } from '../../config';
+---
+
+<ContentLayout
+	lang="en"
+	title="Support — PhotoDays"
+	description="Contact PhotoDays support, report a problem or learn what diagnostics are attached to a support request."
+	canonicalPath="/support/"
+	enPath="/support/"
+	ruPath="/ru/support/"
+	eyebrow="We’re here to help"
+	heading="PhotoDays Support"
+>
+	<p class="lead">Need help, found a bug or have a question about PhotoDays? Choose the subject that best matches your message.</p>
+
+	<div class="support-actions">
+		<a class="support-action" href={`mailto:${siteConfig.supportEmail}?subject=PhotoDays%20Support%20Request`}>
+			<span class="support-action-icon" aria-hidden="true">?</span>
+			<span><strong>Contact support</strong><small>Help with the app, purchases, sync or your account settings</small></span>
+			<span aria-hidden="true">→</span>
+		</a>
+		<a class="support-action" href={`mailto:${siteConfig.supportEmail}?subject=PhotoDays%20Bug%20Report`}>
+			<span class="support-action-icon" aria-hidden="true">!</span>
+			<span><strong>Report a bug</strong><small>Tell us what happened and what you expected to happen</small></span>
+			<span aria-hidden="true">→</span>
+		</a>
+	</div>
+
+	<h2>Diagnostic attachment</h2>
+	<p>When you send a request from inside PhotoDays, the app may attach a small text file with technical information that helps us investigate the issue. It can include the app and iOS versions, device model, a random support identifier, iCloud sync status, local storage usage, app language, theme and time zone.</p>
+	<div class="notice">The attachment does not include your photos, videos, notes, albums, email address or phone number. You can remove it before sending the message.</div>
+
+	<h2>Direct email</h2>
+	<p>You can also write to <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>.</p>
+</ContentLayout>
