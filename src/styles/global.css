@@ -695,6 +695,83 @@ a.store-cta:hover {
 	transform: rotate(2deg) translateY(30px);
 }
 
+.feature-phone-stack {
+	position: relative;
+	width: min(480px, 100%);
+	height: 610px;
+	justify-self: center;
+}
+
+.feature-phone-stack .feature-phone {
+	position: absolute;
+	top: 0;
+	width: 255px;
+}
+
+.feature-phone-progress {
+	left: 0;
+	z-index: 2;
+	transform: rotate(-3deg) translateY(28px);
+}
+
+.feature-phone-reminder {
+	right: 0;
+	z-index: 1;
+	transform: rotate(5deg) translateY(68px);
+}
+
+.product-video {
+	position: relative;
+	width: min(330px, 100%);
+	justify-self: center;
+	border: 8px solid #050506;
+	border-radius: 48px;
+	background: #050506;
+	box-shadow: var(--shadow-phone);
+	overflow: hidden;
+	transform: rotate(-2deg);
+}
+
+.product-video video {
+	display: block;
+	width: 100%;
+	aspect-ratio: 540 / 1174;
+	border-radius: 40px;
+	background: #e8e8ea;
+	object-fit: cover;
+}
+
+.product-video-toggle {
+	position: absolute;
+	left: 50%;
+	bottom: 24px;
+	min-width: 164px;
+	min-height: 48px;
+	padding: 0 18px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 9px;
+	border: 1px solid rgba(255, 255, 255, 0.32);
+	border-radius: 999px;
+	background: rgba(10, 10, 12, 0.78);
+	color: #fff;
+	font: inherit;
+	font-size: 0.82rem;
+	font-weight: 720;
+	backdrop-filter: blur(18px);
+	-webkit-backdrop-filter: blur(18px);
+	transform: translateX(-50%);
+	cursor: pointer;
+}
+
+.product-video-icon {
+	width: 18px;
+	display: inline-grid;
+	place-items: center;
+	font-size: 0.72rem;
+}
+
 .feature-video {
 	background:
 		radial-gradient(circle at 18% 22%, rgba(221, 235, 255, 0.78), transparent 38%),
@@ -1070,7 +1147,7 @@ a.store-cta:hover {
 
 	.hero-phone-back {
 		width: 230px;
-		transform: translate(100px, 24px) rotate(8deg);
+		transform: translate(48px, 24px) rotate(4deg);
 	}
 
 	.steps-grid {
@@ -1154,7 +1231,7 @@ a.store-cta:hover {
 
 	.hero-phone-back {
 		width: min(220px, 56vw);
-		transform: translate(84px, 28px) rotate(8deg);
+		transform: translate(42px, 28px) rotate(4deg);
 	}
 
 	.icon-orbit {
@@ -1218,6 +1295,25 @@ a.store-cta:hover {
 	.feature-phone {
 		width: min(250px, 72vw);
 		transform: translateY(58px) !important;
+	}
+
+	.feature-phone-stack {
+		width: min(410px, 100%);
+		height: 540px;
+	}
+
+	.feature-phone-stack .feature-phone {
+		width: min(220px, 58vw);
+	}
+
+	.product-video {
+		width: min(250px, 72vw);
+		order: 2;
+		transform: translateY(58px);
+	}
+
+	.feature-video .feature-copy {
+		order: 1;
 	}
 
 	.feature-copy {

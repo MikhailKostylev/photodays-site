@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-22T15:00:00Z",
+  "source": {
+    "repository": "MikhailKostylev/ProgressTracker",
+    "branch": "codex/mock-data-for-marketing",
+    "commit": "11e8c2490dc910c845f92facbec26fc15abff0b4"
+  },
+  "capture": {
+    "scheme": "ProgressTrackerMarketingDemo",
+    "arguments": ["--marketing-demo", "--marketing-demo-screen"],
+    "date": "2026-07-21T12:00:00+03:00",
+    "locale": "en_US",
+    "theme": "light",
+    "statusBar": "09:41 / 100%",
+    "dimensions": "1206x2622",
+    "screens": {
+      "home.png": "e301273d6816aef47339da0cba902ff7506c94c8ea6aa263ea5cbc58dff006c1",
+      "progress.png": "73a513c15eb57e8bd8f29c7d7ff8423b18d5fca83166d86c48521c3efbdfd41e",
+      "camera.png": "9de844f70100f8ff08ea298ed251151f754775142d630cc5a9f1b1373c6ed016",
+      "compare.png": "034da39bf7cc84a2732d6f7133c8a454fcf6108b5ea0f81320813663d04a80b6",
+      "video.png": "59008fb4369cb98ef67910347e1583d7a4131225510e1d143740cf9c8607e4ad",
+      "reminder.png": "1e10bc0fb9d3364a8158b6aab04134ea96cdb64c8f1db9c3bb650f12ea58ea98",
+      "settings.png": "bb57665f5ec7871eccd0ad950734d17997215476c1d9d668803af7ef2cac344f"
+    }
+  },
+  "resources": {
+    "A01": {
+      "id": "D2000000-0000-4000-8000-000000000001",
+      "file": "journey-a-01.jpg",
+      "sha256": "7eacd05038dc0fbb9c28c2a218b8d38217eb28847cdd57deb04a345c4729429c"
+    },
+    "B18": {
+      "id": "D2000000-0000-4000-8000-000000000053",
+      "file": "journey-b-18.jpg",
+      "sha256": "9c214bebb71e470bd32ced731357a1eaaa03c72282b9571f122e50143d87e31c"
+    },
+    "B04": {
+      "id": "D2000000-0000-4000-8000-000000000039",
+      "file": "journey-b-04.jpg",
+      "sha256": "cc2e31aa870a6db24486315d9baefdfa64941c6ddab3e64803590734c4460b18"
+    },
+    "B11": {
+      "id": "D2000000-0000-4000-8000-000000000046",
+      "file": "journey-b-11.jpg",
+      "sha256": "d92bcea0e11d5c33c10ea962cf12a8057dc853344c9934fe2828cff438aa931d"
+    }
+  },
+  "beforeAfter": {
+    "outputDimensions": "1280x800",
+    "targetEyeCenter": [0.5, 0.43],
+    "targetEyeDistance": 0.2,
+    "A01": {
+      "anchor": { "center": [0.534, 0.356], "distance": 0.166, "roll": 0.01 },
+      "output": "first.jpg",
+      "sha256": "ade53740e2b56c7ae136dda1cfe58325e98705e18b5ea6345c5316a0affff430"
+    },
+    "B18": {
+      "anchor": { "center": [0.638, 0.304], "distance": 0.155, "roll": 0.16 },
+      "relativeScale": 1.07097,
+      "rotationDegrees": -8.594,
+      "output": "latest.jpg",
+      "sha256": "5bc31d89cb65708b20a67a7930aec52dac369ebad3930dbac2d7cad1b18a2aa9"
+    }
+  },
+  "video": {
+    "source": "PhotoDays-onboarding-inline-12s.mp4",
+    "sourceSha256": "2fb6238e1d49e608163c7cb44aa67c55f690904b91911023e26c7a47c863d26d",
+    "durationSeconds": 12.1,
+    "sequence": ["Home", "goal and chart", "Compare", "progress video"],
+    "output": {
+      "file": "photodays-product-demo.mp4",
+      "codec": "H.264/AVC",
+      "dimensions": "540x1174",
+      "frameRate": 30,
+      "audioTracks": 0,
+      "fastStart": true,
+      "sha256": "7c6207af27b97f5c3f6ff7acb11573c13b3777ad58dd31ed910e0fec0bf6983d"
+    },
+    "poster": {
+      "timeSeconds": 10,
+      "file": "product-demo-poster.webp",
+      "sha256": "eaf1fb9b087979961a946e110e23a14953b2a58c9bfaa6ca983c56996b117920"
+    }
+  },
+  "openGraph": {
+    "dimensions": "1200x630",
+    "builtFrom": ["home.png", "compare.png", "latest.jpg", "app-icon.png"],
+    "sha256": "1c11aeb74d63d01a70f71af1b648f99294c76b00dde88d47c0b9cceb9d209743"
+  }
+}

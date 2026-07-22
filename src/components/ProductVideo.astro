@@ -1,0 +1,122 @@
+---
+import poster from '../assets/video/product-demo-poster.webp';
+import type { SiteLanguage } from '../config';
+
+interface Props { lang: SiteLanguage }
+const { lang } = Astro.props;
+const labels = lang === 'ru'
+	? {
+		play: 'Воспроизвести видео',
+		pause: 'Поставить видео на паузу',
+		description: 'Короткая демонстрация PhotoDays: главный экран, цель, сравнение и видео прогресса.',
+	}
+	: {
+		play: 'Play product video',
+		pause: 'Pause product video',
+		description: 'A short PhotoDays demo showing Home, a goal, Compare and a progress video.',
+	};
+---
+
+<div class="product-video" data-product-video>
+	<video
+		data-product-video-element
+		preload="none"
+		muted
+		playsinline
+		loop
+		poster={poster.src}
+		aria-label={labels.description}
+	>
+		<source data-src="/media/photodays-product-demo.mp4" type="video/mp4" />
+	</video>
+	<button
+		class="product-video-toggle"
+		type="button"
+		data-product-video-toggle
+		data-play-label={labels.play}
+		data-pause-label={labels.pause}
+		aria-label={labels.play}
+		aria-pressed="false"
+	>
+		<span class="product-video-icon" data-product-video-icon aria-hidden="true">▶</span>
+		<span data-product-video-label>{labels.play}</span>
+	</button>
+</div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-product-video]').forEach((root) => {
+		if (root.dataset.initialized === 'true') return;
+		root.dataset.initialized = 'true';
+
+		const video = root.querySelector<HTMLVideoElement>('[data-product-video-element]');
+		const source = video?.querySelector<HTMLSourceElement>('source[data-src]');
+		const toggle = root.querySelector<HTMLButtonElement>('[data-product-video-toggle]');
+		const icon = root.querySelector<HTMLElement>('[data-product-video-icon]');
+		const text = root.querySelector<HTMLElement>('[data-product-video-label]');
+		if (!video || !source || !toggle || !icon || !text) return;
+
+		let sourceLoaded = false;
+		let explicitlyStarted = false;
+		let isNearViewport = false;
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+		const loadSource = () => {
+			if (sourceLoaded) return;
+			const url = source.dataset.src;
+			if (!url) return;
+			source.src = url;
+			video.load();
+			sourceLoaded = true;
+		};
+
+		const updateControl = () => {
+			const playing = !video.paused && !video.ended;
+			const label = playing ? toggle.dataset.pauseLabel : toggle.dataset.playLabel;
+			toggle.setAttribute('aria-pressed', String(playing));
+			toggle.setAttribute('aria-label', label ?? '');
+			text.textContent = label ?? '';
+			icon.textContent = playing ? 'Ⅱ' : '▶';
+		};
+
+		const togglePlayback = async () => {
+			if (!video.paused) {
+				video.pause();
+				return;
+			}
+			explicitlyStarted = true;
+			loadSource();
+			try {
+				await video.play();
+			} catch {
+				updateControl();
+			}
+		};
+
+		toggle.addEventListener('click', togglePlayback);
+		toggle.addEventListener('keydown', (event) => {
+			if (event.key !== ' ' && event.key !== 'Enter') return;
+			event.preventDefault();
+			togglePlayback();
+		});
+		video.addEventListener('play', updateControl);
+		video.addEventListener('pause', updateControl);
+		video.addEventListener('ended', updateControl);
+
+		const observer = new IntersectionObserver((entries) => {
+			const entry = entries[0];
+			isNearViewport = entry.isIntersecting;
+			if (isNearViewport && !reducedMotion.matches) loadSource();
+			if (!isNearViewport && !video.paused) video.pause();
+		}, { rootMargin: '320px 0px', threshold: 0.05 });
+		observer.observe(root);
+
+		document.addEventListener('visibilitychange', () => {
+			if (document.hidden && !video.paused) video.pause();
+		});
+		reducedMotion.addEventListener('change', (event) => {
+			if (event.matches && !video.paused) video.pause();
+			if (!event.matches && isNearViewport && !explicitlyStarted) loadSource();
+		});
+		updateControl();
+	});
+</script>

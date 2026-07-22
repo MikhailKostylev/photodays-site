@@ -1,13 +1,14 @@
 ---
 import { Picture } from 'astro:assets';
 import appIcon from '../assets/app-icon.png';
-import beforeImage from '../assets/demo/before.jpg';
-import afterImage from '../assets/demo/after.jpg';
+import beforeImage from '../assets/demo/first.jpg';
+import afterImage from '../assets/demo/latest.jpg';
 import homeScreen from '../assets/screens/home.png';
 import cameraScreen from '../assets/screens/camera.png';
 import compareScreen from '../assets/screens/compare.png';
 import videoScreen from '../assets/screens/video.png';
-import streakScreen from '../assets/screens/streak.png';
+import progressScreen from '../assets/screens/progress.png';
+import reminderScreen from '../assets/screens/reminder.png';
 import settingsScreen from '../assets/screens/settings.png';
 import type { SiteLanguage } from '../config';
 import { copy } from '../data/site';
@@ -15,6 +16,7 @@ import AppStoreCTA from './AppStoreCTA.astro';
 import Footer from './Footer.astro';
 import Header from './Header.astro';
 import PhoneFrame from './PhoneFrame.astro';
+import ProductVideo from './ProductVideo.astro';
 
 interface Props { lang: SiteLanguage }
 const { lang } = Astro.props;
@@ -123,11 +125,14 @@ const stepAlts = lang === 'ru'
 					{t.consistency.points.map((point) => <li><span aria-hidden="true">✓</span>{point}</li>)}
 				</ul>
 			</div>
-			<PhoneFrame src={streakScreen} alt={lang === 'ru' ? 'Экран серий и достижений PhotoDays' : 'PhotoDays streaks and achievements screen'} class="feature-phone" />
+			<div class="feature-phone-stack" aria-label={lang === 'ru' ? 'Прогресс и напоминания PhotoDays' : 'PhotoDays progress and reminders'}>
+				<PhoneFrame src={progressScreen} alt={lang === 'ru' ? 'Цель, серия и статистика PhotoDays' : 'PhotoDays goal, streak and statistics'} class="feature-phone feature-phone-progress" />
+				<PhoneFrame src={reminderScreen} alt={lang === 'ru' ? 'Ежедневное напоминание PhotoDays на 20:00' : 'PhotoDays daily reminder set to 8 PM'} class="feature-phone feature-phone-reminder" />
+			</div>
 		</div>
 
 		<div class="feature-block feature-video">
-			<PhoneFrame src={videoScreen} alt={lang === 'ru' ? 'Экран создания видео PhotoDays' : 'PhotoDays progress video screen'} class="feature-phone" />
+			<ProductVideo lang={lang} />
 			<div class="feature-copy">
 				<div class="eyebrow">{t.video.eyebrow}</div>
 				<h2>{t.video.title}</h2>

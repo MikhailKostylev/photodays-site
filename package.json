@@ -10,9 +10,13 @@
     "build": "astro build",
     "preview": "astro preview",
     "test": "npm run build && node scripts/validate-site.mjs",
+    "media:build": "node scripts/build-marketing-assets.mjs",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "^7.1.3"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.3"
   }
 }

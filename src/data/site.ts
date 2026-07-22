@@ -24,8 +24,8 @@ export const copy = {
 			title: 'A difference you can finally see.',
 			body: 'Compare any two days with a split view, side by side or a gentle fade. The everyday details become a story of real progress.',
 			label: 'Drag to compare the first and latest photo',
-			before: 'Day 1',
-			after: 'Day 35',
+			before: 'First photo',
+			after: 'Latest photo',
 		},
 		steps: {
 			eyebrow: 'How it works',
@@ -104,8 +104,8 @@ export const copy = {
 			title: 'Разница, которую наконец видно.',
 			body: 'Сравнивайте любые две даты: рядом, с помощью слайдера или плавного наложения. Незаметные детали складываются в историю настоящего прогресса.',
 			label: 'Перетащите ползунок, чтобы сравнить первую и последнюю фотографию',
-			before: 'День 1',
-			after: 'День 35',
+			before: 'Первый снимок',
+			after: 'Последний снимок',
 		},
 		steps: {
 			eyebrow: 'Как это работает',
