@@ -1,25 +1,24 @@
 ---
-import { siteConfig, type SiteLanguage } from '../config';
+import { siteConfig } from '../config';
 import { copy } from '../data/site';
 
 interface Props {
-	lang: SiteLanguage;
 	compact?: boolean;
 }
 
-const { lang, compact = false } = Astro.props;
-const label = siteConfig.appStoreUrl ? copy[lang].cta.download : copy[lang].cta.soon;
+const { compact = false } = Astro.props;
+const label = siteConfig.appStoreUrl ? copy.cta.download : copy.cta.soon;
 ---
 
 {
 	siteConfig.appStoreUrl ? (
 		<a class:list={['store-cta', { compact }]} href={siteConfig.appStoreUrl} rel="noopener">
-			<span class="store-mark" aria-hidden="true">●</span>
+			<span class="store-mark" aria-hidden="true"></span>
 			<span>{label}</span>
 		</a>
 	) : (
 		<span class:list={['store-cta', 'is-disabled', { compact }]} aria-disabled="true" role="status">
-			<span class="store-mark" aria-hidden="true">●</span>
+			<span class="store-mark" aria-hidden="true"></span>
 			<span>{label}</span>
 		</span>
 	)

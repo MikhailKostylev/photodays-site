@@ -6,14 +6,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-	lang="en"
 	title="Page not found — PhotoDays"
 	description="The requested PhotoDays page could not be found."
 	canonicalPath="/404.html"
-	enPath="/404.html"
-	ruPath="/404.html"
 >
-	<Header lang="en" />
+	<Header />
 	<main id="main-content" class="not-found section-shell">
 		<div class="not-found-card">
 			<div class="eyebrow">404</div>
@@ -21,9 +18,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 			<p>The page may have moved, but your next progress photo is still waiting.</p>
 			<div class="not-found-actions">
 				<a class="button-link" href="/">Back to PhotoDays</a>
-				<AppStoreCTA lang="en" />
+				<AppStoreCTA />
 			</div>
 		</div>
 	</main>
-	<Footer lang="en" />
+	<Footer />
 </BaseLayout>

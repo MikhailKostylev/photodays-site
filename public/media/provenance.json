@@ -1,91 +1,320 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-07-22T15:00:00Z",
-  "source": {
-    "repository": "MikhailKostylev/ProgressTracker",
-    "branch": "codex/mock-data-for-marketing",
-    "commit": "11e8c2490dc910c845f92facbec26fc15abff0b4"
-  },
-  "capture": {
-    "scheme": "ProgressTrackerMarketingDemo",
-    "arguments": ["--marketing-demo", "--marketing-demo-screen"],
-    "date": "2026-07-21T12:00:00+03:00",
-    "locale": "en_US",
-    "theme": "light",
-    "statusBar": "09:41 / 100%",
-    "dimensions": "1206x2622",
-    "screens": {
-      "home.png": "e301273d6816aef47339da0cba902ff7506c94c8ea6aa263ea5cbc58dff006c1",
-      "progress.png": "73a513c15eb57e8bd8f29c7d7ff8423b18d5fca83166d86c48521c3efbdfd41e",
-      "camera.png": "9de844f70100f8ff08ea298ed251151f754775142d630cc5a9f1b1373c6ed016",
-      "compare.png": "034da39bf7cc84a2732d6f7133c8a454fcf6108b5ea0f81320813663d04a80b6",
-      "video.png": "59008fb4369cb98ef67910347e1583d7a4131225510e1d143740cf9c8607e4ad",
-      "reminder.png": "1e10bc0fb9d3364a8158b6aab04134ea96cdb64c8f1db9c3bb650f12ea58ea98",
-      "settings.png": "bb57665f5ec7871eccd0ad950734d17997215476c1d9d668803af7ef2cac344f"
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-30T00:00:00Z",
+  "sources": {
+    "photoSequence": {
+      "label": "PhotoDays_sequence_01-35",
+      "ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35"
+      ],
+      "files": [
+        {
+          "id": "01",
+          "file": "01_original_04.png",
+          "sha256": "40761df0f68e2f6876af2cbe540005ac2a957655d7ac69cc8a25877d8afbf36e"
+        },
+        {
+          "id": "02",
+          "file": "02_original_07.png",
+          "sha256": "b69ed151f8440e65d490cd9241c9cbd35362bf4f1e1419f67b4e8acb5bb02cbb"
+        },
+        {
+          "id": "03",
+          "file": "03_original_20.png",
+          "sha256": "f039039a40c5c2fb98aad9bd15b0c0e843dce4eae9510939f9ef409cb5098e76"
+        },
+        {
+          "id": "04",
+          "file": "04_original_28.png",
+          "sha256": "5608838331b499a82ba0d55e2bd47e356e5526f368a24c57316068af3e1eacc1"
+        },
+        {
+          "id": "05",
+          "file": "05_original_03.png",
+          "sha256": "e12239827e65a70b461fd1c38733de7da6df99b36e6b0cc1c00a7e749c21ecc1"
+        },
+        {
+          "id": "06",
+          "file": "06_original_09.png",
+          "sha256": "1c1ea916a2b6a1ca9d7943635c93908ea3cf98655fe6b3ede0d17630e1f61e8d"
+        },
+        {
+          "id": "07",
+          "file": "07_original_02.png",
+          "sha256": "72a9a8c965adaf6d14d7f6a9f332c5ccb5ee7b79602086694da3c8f03664a90a"
+        },
+        {
+          "id": "08",
+          "file": "08_original_06.png",
+          "sha256": "8d70d34b310937fb420d321d57e049dbe38d980b78683ee0eddd5273cd4ee1b6"
+        },
+        {
+          "id": "09",
+          "file": "09_original_01.png",
+          "sha256": "eb8eb73f8871095331b389145b0a9cc5065b29103f63def344af851cf3ead507"
+        },
+        {
+          "id": "10",
+          "file": "10_original_10.png",
+          "sha256": "c003eb80217f6485d5d8d75d21ed4abb7930028bebeb5406d2e398b06426e51b"
+        },
+        {
+          "id": "11",
+          "file": "11_original_17.png",
+          "sha256": "f3fb63c3b327fba2d8815c8d1f20778e899567a3f857fc3c60c102328e50a591"
+        },
+        {
+          "id": "12",
+          "file": "12_original_21.png",
+          "sha256": "d05bd0e902f1d71cd341a733f4af5beda12c8ff699dbe90c9372894a120c5f7c"
+        },
+        {
+          "id": "13",
+          "file": "13_original_13.png",
+          "sha256": "d5a4e79c74a1479523964e9ea7f2a712a54c13262622ded6c2730beebd88a291"
+        },
+        {
+          "id": "14",
+          "file": "14_original_05.png",
+          "sha256": "45a688338d2b1f3753fe40e5a84ba77b3ab54e566a330279fd54e55a91158bf1"
+        },
+        {
+          "id": "15",
+          "file": "15_original_15.png",
+          "sha256": "0f0c4aa11538de5f560797912ecc5c3d3da0de8c34032fbee77b5dc8e3151e5d"
+        },
+        {
+          "id": "16",
+          "file": "16_original_18.png",
+          "sha256": "ec22662c5d22729009d5897cc6d699067a1b6b40f544353837b0d1ee7f47f4b1"
+        },
+        {
+          "id": "17",
+          "file": "17_original_08.png",
+          "sha256": "8562dc5ac272f9804e152df2304943b292e2aed6bd276bae314d8f51d3d07a7c"
+        },
+        {
+          "id": "18",
+          "file": "18_original_22.png",
+          "sha256": "583f96e969a7de36e31f91f593884340298e84018076c577baa4b50be8290ecb"
+        },
+        {
+          "id": "19",
+          "file": "19_original_14.png",
+          "sha256": "159d2fc17814355abc050fd847a11d845653b9e2affc0a516f264c060ddaea87"
+        },
+        {
+          "id": "20",
+          "file": "20_original_19.png",
+          "sha256": "aec067569a7d7fab93207bc68a932863cbad70966e14dd77f5f310bd8a5692db"
+        },
+        {
+          "id": "21",
+          "file": "21_original_29.png",
+          "sha256": "abb90096faa5d85c34f4c9873d3cadadbad3c4f0989bc6cdd6ebd76f478164cd"
+        },
+        {
+          "id": "22",
+          "file": "22_original_11.png",
+          "sha256": "07e22e32dcd9fda44ee19d7d51a91e21541afbaff2638c1241d174f7fd297449"
+        },
+        {
+          "id": "23",
+          "file": "23_original_16.png",
+          "sha256": "e5984981376ea2824c9712c6f485c921c9722a8107bc06a636ea987e7bcef3ef"
+        },
+        {
+          "id": "24",
+          "file": "24_original_23.png",
+          "sha256": "73f48d5445af2093a31eb8583e57fc9795498f8f0cce5987440846ad77c283c4"
+        },
+        {
+          "id": "25",
+          "file": "25_original_24.png",
+          "sha256": "cb9e07b23b9d74bb50af1b9fc45dc4efa1963cb407ce829bb376d0f46ce6af0b"
+        },
+        {
+          "id": "26",
+          "file": "26_original_12.png",
+          "sha256": "7552c121256f692e2553c527f5c47cf08dd7b129b51b761633d79296676754a2"
+        },
+        {
+          "id": "27",
+          "file": "27_original_25.png",
+          "sha256": "5cec7b6d58f0408056bee043b65d1580f45bf2f959586ddea0ec50a7c100e2a8"
+        },
+        {
+          "id": "28",
+          "file": "28_original_27.png",
+          "sha256": "693c40b4f232c40a3d791569d0b74d0b6913e4a638426f07a02dee99b1bab956"
+        },
+        {
+          "id": "29",
+          "file": "29_original_26.png",
+          "sha256": "d577ad7e68bc8cdd6148e33f0b33e252c5c5b738d4fbc85f4c89209e9b879df3"
+        },
+        {
+          "id": "30",
+          "file": "30_original_33.png",
+          "sha256": "1ebd26c1050a0f9e43d305b15ceddb3f6573bbb136c718d92ce7715dfa32d51a"
+        },
+        {
+          "id": "31",
+          "file": "31_original_30.png",
+          "sha256": "0fd84a8ee686a5ecffda01ee7af1b8ee4fc9ab8acc618bdb1a3a5b3601133f49"
+        },
+        {
+          "id": "32",
+          "file": "32_original_31.png",
+          "sha256": "c06f77e9df6eba51ff1ef4e34234ace0ea27ced6c694223ba1e7e772d4c327d7"
+        },
+        {
+          "id": "33",
+          "file": "33_original_32.png",
+          "sha256": "15440472beb410d89971d6b0e0ff5f2f3d3f8f26c2a3c48caddc2651fb59055a"
+        },
+        {
+          "id": "34",
+          "file": "34_original_34.png",
+          "sha256": "6e762754ad3637dc083da5e27f132ff9836ee3737b4310ac61dc467be23e9147"
+        },
+        {
+          "id": "35",
+          "file": "35_original_35.png",
+          "sha256": "76b66cda61962fcf28e527d9869328f92d29448b04282dc5adad6279a5a32f51"
+        }
+      ]
+    },
+    "productRecording": {
+      "file": "PhotoDays-onboarding-product-demo-day365-single-blink-1080p-25.1s-2026-07-29.mp4",
+      "sha256": "fe53bf8e33613ad9df5e5d275c45ea7ee3b419bf60daea8d179f75c2b9899e2e",
+      "durationSeconds": 25.1,
+      "dimensions": "1206x2622"
     }
   },
-  "resources": {
-    "A01": {
-      "id": "D2000000-0000-4000-8000-000000000001",
-      "file": "journey-a-01.jpg",
-      "sha256": "7eacd05038dc0fbb9c28c2a218b8d38217eb28847cdd57deb04a345c4729429c"
+  "transformations": {
+    "photoAlignment": {
+      "detector": "Apple Vision VNDetectFaceLandmarksRequest",
+      "eyeMidpointCoreImage": [
+        0.5,
+        0.64
+      ],
+      "visibleEyeMidpoint": [
+        0.5,
+        0.36
+      ],
+      "eyeDistance": 0.24,
+      "rollNormalized": true,
+      "outputDimensions": "1280x1600",
+      "publishedPhotos": [
+        "01",
+        "35"
+      ]
     },
-    "B18": {
-      "id": "D2000000-0000-4000-8000-000000000053",
-      "file": "journey-b-18.jpg",
-      "sha256": "9c214bebb71e470bd32ced731357a1eaaa03c72282b9571f122e50143d87e31c"
-    },
-    "B04": {
-      "id": "D2000000-0000-4000-8000-000000000039",
-      "file": "journey-b-04.jpg",
-      "sha256": "cc2e31aa870a6db24486315d9baefdfa64941c6ddab3e64803590734c4460b18"
-    },
-    "B11": {
-      "id": "D2000000-0000-4000-8000-000000000046",
-      "file": "journey-b-11.jpg",
-      "sha256": "d92bcea0e11d5c33c10ea962cf12a8057dc853344c9934fe2828cff438aa931d"
-    }
-  },
-  "beforeAfter": {
-    "outputDimensions": "1280x800",
-    "targetEyeCenter": [0.5, 0.43],
-    "targetEyeDistance": 0.2,
-    "A01": {
-      "anchor": { "center": [0.534, 0.356], "distance": 0.166, "roll": 0.01 },
-      "output": "first.jpg",
-      "sha256": "ade53740e2b56c7ae136dda1cfe58325e98705e18b5ea6345c5316a0affff430"
-    },
-    "B18": {
-      "anchor": { "center": [0.638, 0.304], "distance": 0.155, "roll": 0.16 },
-      "relativeScale": 1.07097,
-      "rotationDegrees": -8.594,
-      "output": "latest.jpg",
-      "sha256": "5bc31d89cb65708b20a67a7930aec52dac369ebad3930dbac2d7cad1b18a2aa9"
-    }
-  },
-  "video": {
-    "source": "PhotoDays-onboarding-inline-12s.mp4",
-    "sourceSha256": "2fb6238e1d49e608163c7cb44aa67c55f690904b91911023e26c7a47c863d26d",
-    "durationSeconds": 12.1,
-    "sequence": ["Home", "goal and chart", "Compare", "progress video"],
-    "output": {
-      "file": "photodays-product-demo.mp4",
+    "progressFilm": {
+      "sourceIds": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35"
+      ],
+      "durationSeconds": 4.4,
+      "dimensions": "720x900",
       "codec": "H.264/AVC",
-      "dimensions": "540x1174",
+      "frameRate": 30,
+      "audioTracks": 0,
+      "fastStart": true
+    },
+    "productDemo": {
+      "operation": "The first 0.3 seconds are replaced with the clean Home frame sampled at 0.35 seconds.",
+      "durationSeconds": 25.1,
+      "dimensions": "720x1566",
+      "codec": "H.264/AVC",
       "frameRate": 30,
       "audioTracks": 0,
       "fastStart": true,
-      "sha256": "7c6207af27b97f5c3f6ff7acb11573c13b3777ad58dd31ed910e0fec0bf6983d"
-    },
-    "poster": {
-      "timeSeconds": 10,
-      "file": "product-demo-poster.webp",
-      "sha256": "eaf1fb9b087979961a946e110e23a14953b2a58c9bfaa6ca983c56996b117920"
+      "extractedScreens": {
+        "home.png": "ce3232bd5c248713cb67535e421fa462f6681ddb4e9782258e3f818248693853",
+        "progress.png": "4ecf07765dd2c81f184c8264b563b8f87921b90cf84b7009652445c9185b59ef",
+        "camera.png": "817341eacc92529355a4e4ef4d495ee6d9298f271aa5d0e9f283452a4b8c2b8b",
+        "compare.png": "654636009b7cfe0a5d813df7b46ca2a6f32d5eeac8b28a859c51ce6606f203c6",
+        "video.png": "a261416995a9ed932cbd3d1183216212ecee4ebfa1992ecbf7c6ab26ff40e965",
+        "share.png": "4c2fc8fdc91c0528207584e25f0038cdbdcc3612e28c1e134042a26cc0c02d2b"
+      }
     }
   },
-  "openGraph": {
-    "dimensions": "1200x630",
-    "builtFrom": ["home.png", "compare.png", "latest.jpg", "app-icon.png"],
-    "sha256": "1c11aeb74d63d01a70f71af1b648f99294c76b00dde88d47c0b9cceb9d209743"
+  "outputs": {
+    "day1": "20c4efae2560337ed14b089c428c0d652b7a206b14586b1076a3b9208ff555db",
+    "day365": "1ff9022d199bf0b9d603f8fb3bb671a8894923276f1be391ecb9dc6a994b5186",
+    "progressFilm": "205493000bd6775f1d8cad0067b9172cb2ef0056ffa0c641f01d532740ff6937",
+    "progressPoster": "4f9ac8c135967d0d272926c4326362340f4110ede88706666813dd21b6af16bd",
+    "productDemo": "912b48f92a1e5c40b5bfe486d52987afe05e9c7a6ed6ccae2c742697b5058746",
+    "productPoster": "9c3e97bbf16f307b92abc3746445f224012757d11fdd1c544fee344d13a853a5",
+    "openGraph": "0157505ed0fe942a2bd82583ad77890e007fa2e510cb42095718b45112dbdd1d"
   }
 }

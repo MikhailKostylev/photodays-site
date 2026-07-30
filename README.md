@@ -1,13 +1,15 @@
 # PhotoDays website
 
-The bilingual marketing, support and legal website for PhotoDays.
+The English marketing, support and legal website for PhotoDays.
 
-## Routes
+## Public routes
 
-- `/` and `/ru/` — product landing pages
-- `/privacy/` and `/ru/privacy/`
-- `/terms/` and `/ru/terms/`
-- `/support/` and `/ru/support/`
+- `/` — benefit-led product landing page
+- `/privacy/`
+- `/terms/`
+- `/support/`
+
+Legacy `/ru/` routes are English `noindex` redirects to their canonical English pages. They remain only so old links do not break and are not included in the sitemap.
 
 ## Local development
 
@@ -16,18 +18,27 @@ npm install
 npm run dev
 ```
 
-Run `npm test` before publishing. The site is built as static HTML and deployed to GitHub Pages by the workflow in `.github/workflows/deploy.yml`.
+Run `npm test` before publishing. The site is generated as static HTML and deployed to GitHub Pages by `.github/workflows/deploy.yml`.
 
 The App Store URL is intentionally `null` in `src/config.ts`. Add the released app URL there to activate every download button.
 
 ## Marketing media
 
-The product screenshots, aligned comparison pair, video poster and Open Graph card are derived from the real `codex/mock-data-for-marketing` demo at commit `11e8c249`. Public provenance and checksums are recorded in `public/media/provenance.json`.
+The landing page uses approved real PhotoDays photography and product recordings:
 
-To rebuild the image derivatives after replacing the approved source captures:
+- 35 aligned source portraits produce the Day 1 / Day 365 comparison and 4.4-second progress film.
+- The 25.1-second July 29 product recording produces the main demo and six supporting app screens.
+- The original first 0.3 seconds of the product recording are replaced with its clean Home frame.
+- The recap, master recording, M4V files and original 35 PNG files are never copied into `public` or `dist`.
+
+Public provenance, transformation details and checksums are recorded in `public/media/provenance.json` without personal filesystem paths.
+
+Developer-only media commands:
 
 ```sh
-npm run media:build
+npm run media:photos -- /path/to/sequence /path/to/image-output /path/to/progress-film.mp4 /path/to/progress-poster.png
+npm run media:video -- /path/to/product-source.mp4 /path/to/product-demo.mp4 /path/to/product-poster.png /path/to/screens
+npm run media:build -- --progress-poster /path/to/progress-poster.png --product-poster /path/to/product-poster.png --sequence-root /path/to/sequence --product-source /path/to/product-source.mp4
 ```
 
-The short web video is exported by `scripts/transcode-product-video.swift`. Do not commit the 41-second production master or the original 53 demo photographs to this public repository.
+Do not commit source recordings or the source photo collection to this public repository.

@@ -1,0 +1,95 @@
+---
+import poster from '../assets/video/progress-film-poster.webp';
+---
+
+<div class="progress-loop" data-progress-loop>
+	<video
+		data-progress-loop-video
+		preload="none"
+		muted
+		playsinline
+		loop
+		poster={poster.src}
+		aria-label="A silent four-second film made from 35 aligned progress portraits."
+	>
+		<source data-src="/media/photodays-progress-film.mp4" type="video/mp4" />
+	</video>
+	<button
+		class="media-toggle media-toggle-minimal"
+		type="button"
+		data-progress-loop-toggle
+		data-play-label="Play the 35-photo progress film"
+		data-pause-label="Pause the 35-photo progress film"
+		aria-label="Play the 35-photo progress film"
+		aria-pressed="false"
+	>
+		<span data-progress-loop-icon aria-hidden="true">▶</span>
+		<span class="visually-hidden" data-progress-loop-label>Play the 35-photo progress film</span>
+	</button>
+</div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-progress-loop]').forEach((root) => {
+		if (root.dataset.initialized === 'true') return;
+		root.dataset.initialized = 'true';
+		const video = root.querySelector<HTMLVideoElement>('[data-progress-loop-video]');
+		const source = video?.querySelector<HTMLSourceElement>('source[data-src]');
+		const toggle = root.querySelector<HTMLButtonElement>('[data-progress-loop-toggle]');
+		const icon = root.querySelector<HTMLElement>('[data-progress-loop-icon]');
+		const label = root.querySelector<HTMLElement>('[data-progress-loop-label]');
+		if (!video || !source || !toggle || !icon || !label) return;
+
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+		let loaded = false;
+		let visible = false;
+		let explicitlyPaused = false;
+
+		const load = () => {
+			if (loaded || !source.dataset.src) return;
+			source.src = source.dataset.src;
+			video.load();
+			loaded = true;
+		};
+		const updateControl = () => {
+			const playing = !video.paused && !video.ended;
+			const text = playing ? toggle.dataset.pauseLabel : toggle.dataset.playLabel;
+			toggle.setAttribute('aria-pressed', String(playing));
+			toggle.setAttribute('aria-label', text ?? '');
+			label.textContent = text ?? '';
+			icon.textContent = playing ? 'Ⅱ' : '▶';
+		};
+		const play = async () => {
+			load();
+			try { await video.play(); } catch { updateControl(); }
+		};
+
+		toggle.addEventListener('click', () => {
+			if (video.paused) {
+				explicitlyPaused = false;
+				play();
+			} else {
+				explicitlyPaused = true;
+				video.pause();
+			}
+		});
+		video.addEventListener('play', updateControl);
+		video.addEventListener('pause', updateControl);
+
+		const observer = new IntersectionObserver(([entry]) => {
+			visible = entry.isIntersecting;
+			if (visible && !reducedMotion.matches && !explicitlyPaused) play();
+			if (!visible && !video.paused) video.pause();
+		}, { rootMargin: '180px 0px', threshold: 0.25 });
+		observer.observe(root);
+
+		document.addEventListener('visibilitychange', () => {
+			if (document.hidden && !video.paused) video.pause();
+			else if (!document.hidden && visible && !reducedMotion.matches && !explicitlyPaused) play();
+		});
+		reducedMotion.addEventListener('change', (event) => {
+			if (event.matches) video.pause();
+			else if (visible && !explicitlyPaused) play();
+		});
+		updateControl();
+	});
+</script>

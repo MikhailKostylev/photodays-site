@@ -1,5 +1,6 @@
-import { access, mkdir } from 'node:fs/promises';
-import { dirname, join, resolve } from 'node:path';
+import { createHash } from 'node:crypto';
+import { access, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { basename, resolve } from 'node:path';
 import process from 'node:process';
 import sharp from 'sharp';
 
@@ -8,118 +9,43 @@ for (let index = 2; index < process.argv.length; index += 2) {
 	args.set(process.argv[index], process.argv[index + 1]);
 }
 
-const marketingRoot = resolve(
-	args.get('--marketing-root') ?? process.env.MARKETING_DEMO_ROOT ?? '',
-);
-const posterSource = args.get('--poster-source');
+const progressPosterSource = required('--progress-poster');
+const productPosterSource = required('--product-poster');
+const sequenceRoot = args.get('--sequence-root');
+const productSource = args.get('--product-source');
 
-if (!marketingRoot || marketingRoot === resolve('')) {
-	throw new Error('Pass --marketing-root /path/to/ProgressTrackerMarketingDemo.');
-}
+await access(progressPosterSource);
+await access(productPosterSource);
+await mkdir(resolve('src/assets/video'), { recursive: true });
 
-const outputDirectory = resolve('src/assets/demo');
-await mkdir(outputDirectory, { recursive: true });
+await sharp(progressPosterSource)
+	.resize(720, 900, { fit: 'cover' })
+	.webp({ quality: 76, effort: 6 })
+	.toFile(resolve('src/assets/video/progress-film-poster.webp'));
 
-const target = {
-	width: 1280,
-	height: 800,
-	eyeX: 0.5,
-	eyeY: 0.43,
-	eyeDistance: 0.2,
-};
-const sourceWidth = 1086;
-const sourceHeight = 1448;
-const firstScale = (target.width * target.eyeDistance) / (0.166 * sourceWidth);
-
-const photos = [
-	{
-		name: 'first',
-		path: join(
-			marketingRoot,
-			'ProgressTracker/Resources/MarketingDemo/journey-a-01.jpg',
-		),
-		eyeCenter: { x: 0.534, y: 0.356 },
-		scale: firstScale,
-		rotation: 0,
-	},
-	{
-		name: 'latest',
-		path: join(
-			marketingRoot,
-			'ProgressTracker/Resources/MarketingDemo/journey-b-18.jpg',
-		),
-		eyeCenter: { x: 0.638, y: 0.304 },
-		scale: firstScale * 1.07097,
-		rotation: -8.594,
-	},
-];
-
-for (const photo of photos) {
-	await access(photo.path);
-	await alignPhoto(photo, join(outputDirectory, `${photo.name}.jpg`));
-}
-
-if (posterSource) {
-	await sharp(resolve(posterSource))
-		.resize(540, 1174, { fit: 'cover' })
-		.webp({ quality: 76, effort: 6 })
-		.toFile(resolve('src/assets/video/product-demo-poster.webp'));
-}
+await sharp(productPosterSource)
+	.resize(720, 1566, { fit: 'cover' })
+	.webp({ quality: 73, effort: 6 })
+	.toFile(resolve('src/assets/video/product-demo-poster.webp'));
 
 await buildOpenGraphCard();
+await writeProvenance();
 
-async function alignPhoto(photo, outputPath) {
-	const scaledWidth = Math.round(sourceWidth * photo.scale);
-	const scaledHeight = Math.round(sourceHeight * photo.scale);
-	const radians = (photo.rotation * Math.PI) / 180;
-	const cosine = Math.cos(radians);
-	const sine = Math.sin(radians);
-	const rotatedWidth = Math.ceil(
-		Math.abs(scaledWidth * cosine) + Math.abs(scaledHeight * sine),
-	);
-	const rotatedHeight = Math.ceil(
-		Math.abs(scaledWidth * sine) + Math.abs(scaledHeight * cosine),
-	);
-	const eyeBeforeRotation = {
-		x: photo.eyeCenter.x * scaledWidth,
-		y: photo.eyeCenter.y * scaledHeight,
-	};
-	const center = { x: scaledWidth / 2, y: scaledHeight / 2 };
-	const eyeAfterRotation = {
-		x:
-			cosine * (eyeBeforeRotation.x - center.x)
-			- sine * (eyeBeforeRotation.y - center.y)
-			+ rotatedWidth / 2,
-		y:
-			sine * (eyeBeforeRotation.x - center.x)
-			+ cosine * (eyeBeforeRotation.y - center.y)
-			+ rotatedHeight / 2,
-	};
-	const left = Math.round(eyeAfterRotation.x - target.width * target.eyeX);
-	const top = Math.round(eyeAfterRotation.y - target.height * target.eyeY);
+function required(name) {
+	const value = args.get(name);
+	if (!value) throw new Error(`Missing ${name}.`);
+	return resolve(value);
+}
 
-	if (
-		left < 0
-		|| top < 0
-		|| left + target.width > rotatedWidth
-		|| top + target.height > rotatedHeight
-	) {
-		throw new Error(`${photo.name} alignment crop falls outside the transformed image.`);
-	}
-
-	await sharp(photo.path)
-		.resize(scaledWidth, scaledHeight, { fit: 'fill' })
-		.rotate(photo.rotation, { background: '#efecea' })
-		.extract({ left, top, width: target.width, height: target.height })
-		.jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
-		.toFile(outputPath);
+async function sha256(path) {
+	return createHash('sha256').update(await readFile(path)).digest('hex');
 }
 
 async function roundedScreenshot(path, width) {
 	const height = Math.round((width * 2622) / 1206);
 	const mask = Buffer.from(`
 		<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-			<rect width="${width}" height="${height}" rx="${Math.round(width * 0.1)}" fill="white"/>
+			<rect width="${width}" height="${height}" rx="${Math.round(width * 0.11)}" fill="white"/>
 		</svg>
 	`);
 	return sharp(path)
@@ -130,66 +56,133 @@ async function roundedScreenshot(path, width) {
 }
 
 async function buildOpenGraphCard() {
-	const home = await roundedScreenshot(resolve('src/assets/screens/home.png'), 226);
-	const compare = await roundedScreenshot(resolve('src/assets/screens/compare.png'), 226);
-	const icon = await sharp(resolve('src/assets/app-icon.png'))
-		.resize(78, 78)
-		.png()
-		.toBuffer();
-	const latest = await sharp(join(outputDirectory, 'latest.jpg'))
-		.resize(680, 630, { fit: 'cover' })
-		.modulate({ saturation: 0.82, brightness: 1.03 })
+	const home = await roundedScreenshot(resolve('src/assets/screens/home.png'), 238);
+	const icon = await sharp(resolve('src/assets/app-icon.png')).resize(82, 82).png().toBuffer();
+	const latest = await sharp(resolve('src/assets/demo/day-365.jpg'))
+		.resize(610, 630, { fit: 'cover', position: 'center' })
+		.modulate({ saturation: 0.9, brightness: 1.02 })
 		.toBuffer();
 	const homeTilted = await sharp(home)
-		.rotate(-3.2, { background: { r: 0, g: 0, b: 0, alpha: 0 } })
-		.png()
-		.toBuffer();
-	const compareTilted = await sharp(compare)
-		.rotate(4.2, { background: { r: 0, g: 0, b: 0, alpha: 0 } })
+		.rotate(-3.5, { background: { r: 0, g: 0, b: 0, alpha: 0 } })
 		.png()
 		.toBuffer();
 	const overlay = Buffer.from(`
 		<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
 			<defs>
 				<linearGradient id="fade" x1="0" x2="1">
-					<stop offset="0.43" stop-color="#f8f6f3"/>
-					<stop offset="0.66" stop-color="#f8f6f3" stop-opacity=".78"/>
-					<stop offset="1" stop-color="#f8f6f3" stop-opacity=".08"/>
+					<stop offset=".42" stop-color="#f7f2e9"/>
+					<stop offset=".63" stop-color="#f7f2e9" stop-opacity=".82"/>
+					<stop offset="1" stop-color="#f7f2e9" stop-opacity=".04"/>
 				</linearGradient>
-				<filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
-					<feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#241b26" flood-opacity=".24"/>
+				<filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+					<feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#241b18" flood-opacity=".28"/>
 				</filter>
 			</defs>
 			<rect width="1200" height="630" fill="url(#fade)"/>
-			<circle cx="178" cy="74" r="190" fill="#f0d7aa" opacity=".34"/>
-			<circle cx="430" cy="590" r="240" fill="#dfebff" opacity=".58"/>
-			<rect x="64" y="62" width="94" height="94" rx="28" fill="white" opacity=".82"/>
-			<text x="64" y="226" font-family="-apple-system, BlinkMacSystemFont, Arial" font-size="72" font-weight="760" letter-spacing="-4" fill="#0b0b0d">PhotoDays</text>
-			<text x="68" y="294" font-family="-apple-system, BlinkMacSystemFont, Arial" font-size="30" font-weight="650" fill="#29262d">See the progress you miss</text>
-			<text x="68" y="334" font-family="-apple-system, BlinkMacSystemFont, Arial" font-size="30" font-weight="650" fill="#29262d">day to day.</text>
-			<rect x="66" y="390" width="338" height="54" rx="27" fill="#17151d"/>
-			<text x="235" y="425" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Arial" font-size="19" font-weight="700" fill="white">Capture · Compare · Create</text>
-			<rect x="648" y="42" width="248" height="542" rx="44" fill="#070708" filter="url(#shadow)"/>
-			<rect x="878" y="46" width="248" height="542" rx="44" fill="#070708" filter="url(#shadow)"/>
+			<circle cx="96" cy="26" r="210" fill="#e4bd70" opacity=".25"/>
+			<circle cx="510" cy="620" r="290" fill="#bad8ea" opacity=".34"/>
+			<rect x="58" y="50" width="98" height="98" rx="30" fill="white" opacity=".82"/>
+			<text x="58" y="226" font-family="-apple-system, BlinkMacSystemFont, Arial" font-size="68" font-weight="760" letter-spacing="-4" fill="#11100f">See the change</text>
+			<text x="58" y="300" font-family="-apple-system, BlinkMacSystemFont, Arial" font-size="68" font-weight="760" letter-spacing="-4" fill="#11100f">you’re too close</text>
+			<text x="58" y="374" font-family="-apple-system, BlinkMacSystemFont, Arial" font-size="68" font-weight="760" letter-spacing="-4" fill="#11100f">to notice.</text>
+			<text x="60" y="430" font-family="-apple-system, BlinkMacSystemFont, Arial" font-size="21" font-weight="650" fill="#5f5953">A private visual progress journal for iPhone and iPad.</text>
+			<rect x="58" y="478" width="220" height="50" rx="25" fill="#11100f"/>
+			<text x="168" y="510" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Arial" font-size="17" font-weight="700" fill="#fffdfa">PhotoDays</text>
+			<rect x="850" y="38" width="260" height="570" rx="48" fill="#070708" filter="url(#shadow)"/>
 		</svg>
 	`);
 
-	await mkdir(dirname(resolve('public/og.png')), { recursive: true });
 	await sharp({
 		create: {
 			width: 1200,
 			height: 630,
 			channels: 4,
-			background: '#f8f6f3',
+			background: '#f7f2e9',
 		},
 	})
 		.composite([
-			{ input: latest, left: 520, top: 0 },
+			{ input: latest, left: 590, top: 0 },
 			{ input: overlay, left: 0, top: 0 },
-			{ input: icon, left: 72, top: 70 },
-			{ input: homeTilted, left: 659, top: 52 },
-			{ input: compareTilted, left: 884, top: 58 },
+			{ input: icon, left: 66, top: 58 },
+			{ input: homeTilted, left: 861, top: 48 },
 		])
 		.png({ compressionLevel: 9, palette: true })
 		.toFile(resolve('public/og.png'));
+}
+
+async function writeProvenance() {
+	const sourcePhotos = [];
+	if (sequenceRoot) {
+		const names = (await readdir(resolve(sequenceRoot)))
+			.filter((name) => /\.png$/i.test(name))
+			.sort((a, b) => a.localeCompare(b, 'en', { numeric: true }));
+		for (const name of names) {
+			const path = resolve(sequenceRoot, name);
+			sourcePhotos.push({ id: name.slice(0, 2), file: basename(name), sha256: await sha256(path) });
+		}
+	}
+
+	const screens = {};
+	for (const name of ['home', 'progress', 'camera', 'compare', 'video', 'share']) {
+		screens[`${name}.png`] = await sha256(resolve(`src/assets/screens/${name}.png`));
+	}
+
+	const output = {
+		schemaVersion: 2,
+		generatedAt: '2026-07-30T00:00:00Z',
+		sources: {
+			photoSequence: {
+				label: 'PhotoDays_sequence_01-35',
+				ids: sourcePhotos.map(({ id }) => id),
+				files: sourcePhotos,
+			},
+			productRecording: productSource ? {
+				file: basename(productSource),
+				sha256: await sha256(resolve(productSource)),
+				durationSeconds: 25.1,
+				dimensions: '1206x2622',
+			} : null,
+		},
+		transformations: {
+			photoAlignment: {
+				detector: 'Apple Vision VNDetectFaceLandmarksRequest',
+				eyeMidpointCoreImage: [0.5, 0.64],
+				visibleEyeMidpoint: [0.5, 0.36],
+				eyeDistance: 0.24,
+				rollNormalized: true,
+				outputDimensions: '1280x1600',
+				publishedPhotos: ['01', '35'],
+			},
+			progressFilm: {
+				sourceIds: sourcePhotos.map(({ id }) => id),
+				durationSeconds: 4.4,
+				dimensions: '720x900',
+				codec: 'H.264/AVC',
+				frameRate: 30,
+				audioTracks: 0,
+				fastStart: true,
+			},
+			productDemo: {
+				operation: 'The first 0.3 seconds are replaced with the clean Home frame sampled at 0.35 seconds.',
+				durationSeconds: 25.1,
+				dimensions: '720x1566',
+				codec: 'H.264/AVC',
+				frameRate: 30,
+				audioTracks: 0,
+				fastStart: true,
+				extractedScreens: screens,
+			},
+		},
+		outputs: {
+			day1: await sha256(resolve('src/assets/demo/day-1.jpg')),
+			day365: await sha256(resolve('src/assets/demo/day-365.jpg')),
+			progressFilm: await sha256(resolve('public/media/photodays-progress-film.mp4')),
+			progressPoster: await sha256(resolve('src/assets/video/progress-film-poster.webp')),
+			productDemo: await sha256(resolve('public/media/photodays-product-demo.mp4')),
+			productPoster: await sha256(resolve('src/assets/video/product-demo-poster.webp')),
+			openGraph: await sha256(resolve('public/og.png')),
+		},
+	};
+
+	await writeFile(resolve('public/media/provenance.json'), `${JSON.stringify(output, null, 2)}\n`);
 }

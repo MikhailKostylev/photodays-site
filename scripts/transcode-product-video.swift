@@ -1,7 +1,10 @@
 import AVFoundation
+import AppKit
 import CoreGraphics
+import CoreMedia
 import Foundation
 import ImageIO
+import QuartzCore
 import UniformTypeIdentifiers
 
 enum TranscodeError: Error {
@@ -9,9 +12,31 @@ enum TranscodeError: Error {
     case unableToCreateCompositionTrack
     case unableToCreateExportSession
     case unableToCreatePosterDestination
+    case missingCleanFrame
 }
 
-func transcode(source: URL, output: URL, poster: URL) async throws {
+func writePNG(_ image: CGImage, to output: URL) throws {
+    try? FileManager.default.removeItem(at: output)
+    guard let destination = CGImageDestinationCreateWithURL(
+        output as CFURL,
+        UTType.png.identifier as CFString,
+        1,
+        nil
+    ) else {
+        throw TranscodeError.unableToCreatePosterDestination
+    }
+    CGImageDestinationAddImage(destination, image, nil)
+    guard CGImageDestinationFinalize(destination) else {
+        throw TranscodeError.unableToCreatePosterDestination
+    }
+}
+
+func transcode(
+    source: URL,
+    output: URL,
+    poster: URL,
+    screenshotsDirectory: URL
+) async throws {
     let sourceAsset = AVURLAsset(url: source)
     let duration = try await sourceAsset.load(.duration)
     guard let sourceTrack = try await sourceAsset.loadTracks(withMediaType: .video).first else {
@@ -32,7 +57,7 @@ func transcode(source: URL, output: URL, poster: URL) async throws {
     )
 
     let sourceSize = try await sourceTrack.load(.naturalSize)
-    let targetSize = CGSize(width: 540, height: 1174)
+    let targetSize = CGSize(width: 720, height: 1566)
     let scale = max(
         targetSize.width / sourceSize.width,
         targetSize.height / sourceSize.height
@@ -45,7 +70,9 @@ func transcode(source: URL, output: URL, poster: URL) async throws {
         translationX: (targetSize.width - scaledSize.width) / 2,
         y: (targetSize.height - scaledSize.height) / 2
     )
-    let transform = CGAffineTransform(scaleX: scale, y: scale)
+    let sourceTransform = try await sourceTrack.load(.preferredTransform)
+    let transform = sourceTransform
+        .concatenating(CGAffineTransform(scaleX: scale, y: scale))
         .concatenating(translation)
 
     let instruction = AVMutableVideoCompositionInstruction()
@@ -61,6 +88,39 @@ func transcode(source: URL, output: URL, poster: URL) async throws {
     videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
     videoComposition.instructions = [instruction]
 
+    let generator = AVAssetImageGenerator(asset: sourceAsset)
+    generator.appliesPreferredTrackTransform = true
+    generator.requestedTimeToleranceBefore = .zero
+    generator.requestedTimeToleranceAfter = .zero
+    generator.maximumSize = targetSize
+    let cleanFrame = try await generator.image(
+        at: CMTime(seconds: 0.35, preferredTimescale: 600)
+    ).image
+
+    let parentLayer = CALayer()
+    parentLayer.frame = CGRect(origin: .zero, size: targetSize)
+    let videoLayer = CALayer()
+    videoLayer.frame = parentLayer.frame
+    let cleanFrameLayer = CALayer()
+    cleanFrameLayer.frame = parentLayer.frame
+    cleanFrameLayer.contents = cleanFrame
+    cleanFrameLayer.contentsGravity = .resizeAspectFill
+    cleanFrameLayer.opacity = 1
+    let hideCleanFrame = CABasicAnimation(keyPath: "opacity")
+    hideCleanFrame.fromValue = 1
+    hideCleanFrame.toValue = 0
+    hideCleanFrame.beginTime = AVCoreAnimationBeginTimeAtZero + 0.3
+    hideCleanFrame.duration = 0.001
+    hideCleanFrame.fillMode = .forwards
+    hideCleanFrame.isRemovedOnCompletion = false
+    cleanFrameLayer.add(hideCleanFrame, forKey: "hide-clean-home-frame")
+    parentLayer.addSublayer(videoLayer)
+    parentLayer.addSublayer(cleanFrameLayer)
+    videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(
+        postProcessingAsVideoLayer: videoLayer,
+        in: parentLayer
+    )
+
     try? FileManager.default.removeItem(at: output)
     guard let exportSession = AVAssetExportSession(
         asset: composition,
@@ -70,34 +130,38 @@ func transcode(source: URL, output: URL, poster: URL) async throws {
     }
     exportSession.videoComposition = videoComposition
     exportSession.shouldOptimizeForNetworkUse = true
-    exportSession.fileLengthLimit = 3_400_000
+    exportSession.fileLengthLimit = 5_900_000
     try await exportSession.export(to: output, as: .mp4)
 
-    let generator = AVAssetImageGenerator(asset: sourceAsset)
-    generator.appliesPreferredTrackTransform = true
-    generator.maximumSize = CGSize(width: 1080, height: 2348)
-    let frame = try generator.copyCGImage(
-        at: CMTime(seconds: 10, preferredTimescale: 600),
-        actualTime: nil
+    try writePNG(cleanFrame, to: poster)
+
+    try FileManager.default.createDirectory(
+        at: screenshotsDirectory,
+        withIntermediateDirectories: true
     )
-    try? FileManager.default.removeItem(at: poster)
-    guard let destination = CGImageDestinationCreateWithURL(
-        poster as CFURL,
-        UTType.png.identifier as CFString,
-        1,
-        nil
-    ) else {
-        throw TranscodeError.unableToCreatePosterDestination
-    }
-    CGImageDestinationAddImage(destination, frame, nil)
-    guard CGImageDestinationFinalize(destination) else {
-        throw TranscodeError.unableToCreatePosterDestination
+    let screenshots: [(String, Double)] = [
+        ("home", 0.35),
+        ("progress", 2),
+        ("camera", 5),
+        ("compare", 15),
+        ("video", 20),
+        ("share", 24.6),
+    ]
+    generator.maximumSize = CGSize(width: 1206, height: 2622)
+    for (name, seconds) in screenshots {
+        let image = try await generator.image(
+            at: CMTime(seconds: seconds, preferredTimescale: 600)
+        ).image
+        try writePNG(
+            image,
+            to: screenshotsDirectory.appendingPathComponent("\(name).png")
+        )
     }
 }
 
-guard CommandLine.arguments.count == 4 else {
+guard CommandLine.arguments.count == 5 else {
     FileHandle.standardError.write(
-        Data("Usage: swift transcode-product-video.swift input.mp4 output.mp4 poster.png\n".utf8)
+        Data("Usage: swift transcode-product-video.swift input.mp4 output.mp4 poster.png screenshots-directory\n".utf8)
     )
     exit(64)
 }
@@ -107,7 +171,11 @@ Task {
         try await transcode(
             source: URL(fileURLWithPath: CommandLine.arguments[1]),
             output: URL(fileURLWithPath: CommandLine.arguments[2]),
-            poster: URL(fileURLWithPath: CommandLine.arguments[3])
+            poster: URL(fileURLWithPath: CommandLine.arguments[3]),
+            screenshotsDirectory: URL(
+                fileURLWithPath: CommandLine.arguments[4],
+                isDirectory: true
+            )
         )
         exit(0)
     } catch {

@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+	target: '/' | '/privacy/' | '/terms/' | '/support/';
+}
+
+const { target } = Astro.props;
+const targetUrl = new URL(target, 'https://photodays.app').toString();
+---
+
+<BaseLayout
+	title="PhotoDays — Redirecting"
+	description="This English-only PhotoDays page has moved."
+	canonicalPath={target}
+	noindex
+>
+	<main id="main-content" class="redirect-page">
+		<p>This page is now available in English.</p>
+		<a href={target}>Continue to PhotoDays</a>
+	</main>
+	<meta http-equiv="refresh" content={`0;url=${targetUrl}`} />
+	<script is:inline define:vars={{ target }}>
+		window.location.replace(target);
+	</script>
+</BaseLayout>

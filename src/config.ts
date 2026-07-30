@@ -6,5 +6,3 @@ export const siteConfig = {
 	appleEulaUrl: 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/',
 	socials: {} as Record<string, string>,
 };
-
-export type SiteLanguage = 'en' | 'ru';

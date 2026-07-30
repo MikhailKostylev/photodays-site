@@ -6,11 +6,4 @@ export default defineConfig({
 	output: 'static',
 	trailingSlash: 'always',
 	compressHTML: true,
-	i18n: {
-		locales: ['en', 'ru'],
-		defaultLocale: 'en',
-		routing: {
-			prefixDefaultLocale: false,
-		},
-	},
 });
