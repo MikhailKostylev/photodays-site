@@ -200,6 +200,8 @@ for (const [name, dimensions] of Object.entries({
 	reminder: [1206, 2622],
 	privacy: [1206, 2622],
 	'chart-date-elapsed': [1206, 2622],
+	'chart-duration': [1206, 2622],
+	'chart-mood-trend': [1206, 2622],
 	'chart-year-activity': [1206, 2622],
 	'achievements-profile': [1206, 2622],
 	'achievements-grid': [1206, 2622],
@@ -221,8 +223,8 @@ const provenance = JSON.parse(await readFile(new URL('media/provenance.json', di
 if (provenance.schemaVersion !== 3) errors.push('media/provenance.json: schema version 3 missing');
 if (provenance.sources?.photoSequence?.ids?.length !== 35) errors.push('media/provenance.json: 35 source photo IDs missing');
 const websiteScreens = provenance.transformations?.websiteScreens;
-if (Object.keys(websiteScreens?.publishedScreens ?? {}).length !== 13) {
-	errors.push('media/provenance.json: thirteen published website screen checksums missing');
+if (Object.keys(websiteScreens?.publishedScreens ?? {}).length !== 15) {
+	errors.push('media/provenance.json: fifteen published website screen checksums missing');
 }
 for (const [publishedName, sourceName] of Object.entries({
 	'home.png': '01-home-365-days.png',
@@ -234,6 +236,8 @@ for (const [publishedName, sourceName] of Object.entries({
 	'reminder.png': '10-reminder-enabled.png',
 	'privacy.png': '11-privacy-settings.png',
 	'chart-date-elapsed.png': 'Charts-and-Achievements/chart-date-elapsed.png',
+	'chart-duration.png': 'Charts-and-Achievements/chart-duration.png',
+	'chart-mood-trend.png': 'Charts-and-Achievements/chart-mood-trend.png',
 	'chart-year-activity.png': 'Charts-and-Achievements/chart-year-activity.png',
 	'achievements-profile.png': 'Charts-and-Achievements/streak-profile.png',
 	'achievements-grid.png': 'Charts-and-Achievements/achievements-grid.png',

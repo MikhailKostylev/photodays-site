@@ -1136,6 +1136,46 @@ a.store-cta:hover {
 	transform: translateY(32px) rotate(-5deg);
 }
 
+/* The chart promise is visual proof, so keep four chart states in view at once. */
+.insight-card-charts .insight-visual {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	align-items: end;
+	gap: 16px;
+	padding: 0 32px 28px;
+}
+
+.insight-card-charts .insight-phone {
+	position: relative;
+	left: auto;
+	right: auto;
+	bottom: auto;
+	width: min(100%, 220px);
+	margin: 0 auto;
+	transform: none;
+}
+
+.insight-card-charts .chart-phone:nth-child(2) {
+	transform: translateY(10px) rotate(2deg);
+}
+
+.insight-card-charts .chart-phone:nth-child(3) {
+	transform: rotate(-2deg);
+}
+
+.insight-card-charts .chart-phone:nth-child(4) {
+	transform: translateY(10px) rotate(2deg);
+}
+
+.chart-phone .phone-screen {
+	height: 320px;
+	background: #f1f1f3;
+}
+
+.chart-phone .phone-screen img {
+	transform: translateY(-70px);
+}
+
 .uses {
 	padding: 0 0 clamp(100px, 14vw, 180px);
 	display: grid;
@@ -1885,6 +1925,23 @@ a.store-cta:hover {
 
 	.insight-phone-secondary {
 		right: 2%;
+	}
+
+	.insight-card-charts .insight-visual {
+		gap: 10px;
+		padding: 0 18px 18px;
+	}
+
+	.insight-card-charts .insight-phone {
+		width: 100%;
+	}
+
+	.chart-phone .phone-screen {
+		height: 240px;
+	}
+
+	.chart-phone .phone-screen img {
+		transform: translateY(-54px);
 	}
 
 	.demo-card,

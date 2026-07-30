@@ -7,6 +7,8 @@ import achievementsGridScreen from '../assets/screens/achievements-grid.png';
 import achievementsProfileScreen from '../assets/screens/achievements-profile.png';
 import cameraScreen from '../assets/screens/camera.png';
 import chartDateElapsedScreen from '../assets/screens/chart-date-elapsed.png';
+import chartDurationScreen from '../assets/screens/chart-duration.png';
+import chartMoodTrendScreen from '../assets/screens/chart-mood-trend.png';
 import chartYearActivityScreen from '../assets/screens/chart-year-activity.png';
 import compareScreen from '../assets/screens/compare.png';
 import galleryScreen from '../assets/screens/gallery.png';
@@ -215,16 +217,26 @@ const flowAlts = [
 					<p>{copy.insights.items[0].body}</p>
 					<span class="benefit-proof"><span aria-hidden="true">↗</span>{copy.insights.items[0].proof}</span>
 				</div>
-				<div class="insight-visual">
+				<div class="insight-visual insight-chart-grid">
 					<PhoneFrame
 						src={chartDateElapsedScreen}
 						alt="PhotoDays album chart showing progress across 365 days"
-						class="insight-phone insight-phone-main"
+						class="insight-phone chart-phone"
+					/>
+					<PhoneFrame
+						src={chartDurationScreen}
+						alt="PhotoDays album chart showing session duration over time"
+						class="insight-phone chart-phone"
+					/>
+					<PhoneFrame
+						src={chartMoodTrendScreen}
+						alt="PhotoDays album chart showing a mood trend over time"
+						class="insight-phone chart-phone"
 					/>
 					<PhoneFrame
 						src={chartYearActivityScreen}
 						alt="PhotoDays album chart showing a year of recorded activity"
-						class="insight-phone insight-phone-secondary"
+						class="insight-phone chart-phone"
 					/>
 				</div>
 			</article>

@@ -316,6 +316,8 @@
         "reminder.png": "10-reminder-enabled.png",
         "privacy.png": "11-privacy-settings.png",
         "chart-date-elapsed.png": "Charts-and-Achievements/chart-date-elapsed.png",
+        "chart-duration.png": "Charts-and-Achievements/chart-duration.png",
+        "chart-mood-trend.png": "Charts-and-Achievements/chart-mood-trend.png",
         "chart-year-activity.png": "Charts-and-Achievements/chart-year-activity.png",
         "achievements-profile.png": "Charts-and-Achievements/streak-profile.png",
         "achievements-grid.png": "Charts-and-Achievements/achievements-grid.png"
@@ -330,6 +332,8 @@
         "reminder.png": "0caf730984a6efd5cb3edf94e33875ae941d6c02b55b00edb1d3cf5b4b7fbe1c",
         "privacy.png": "7c8ee33f2d94b25817cd003d9c4a8f263aa3dbb6990bc36c2a73b1d57ff6bf1f",
         "chart-date-elapsed.png": "bfddbfeb5f7968c71f48991a670632a4c49a62895359705dd1f3ba9a227e875e",
+        "chart-duration.png": "10aadaa4b1edb0716fa007be2c0f2102049a2ff5e1a9105b32f631679b027035",
+        "chart-mood-trend.png": "d6157554c16b74998f91059b24e7d481c4b63d81e28e5b445596a8fa0e87c438",
         "chart-year-activity.png": "79cbc56d4ddacda973853c41a43941cf474c85267e651cb11dc04e99c1910aae",
         "achievements-profile.png": "4b8e18747c28eb0fe2679120c2b9c6258935d35f85e7b2fc07348369cda73ca4",
         "achievements-grid.png": "5a21e9eb0896e65c2fad096e5f6037a4cf2a87eb2342a05035642e09ce5065d7",
