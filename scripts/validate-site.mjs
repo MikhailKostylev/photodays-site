@@ -104,6 +104,9 @@ for (const phrase of [
 	'Your memory misses small changes. Your photos don’t.',
 	'35 moments across 365 days.',
 	'See the whole journey in 25 seconds.',
+	'See the pattern. Celebrate the progress.',
+	'Know where the journey is heading.',
+	'Let consistency feel rewarding.',
 	'Coming soon on the App Store',
 	'Day 1',
 	'Day 365',
@@ -113,6 +116,12 @@ for (const phrase of [
 if (!home.includes('application/ld+json')) errors.push('index.html: SoftwareApplication data missing');
 if (!home.includes('property="og:image"')) errors.push('index.html: Open Graph image metadata missing');
 if (home.includes('type="range"')) errors.push('index.html: visible bottom comparison range remains');
+if (home.indexOf('id="demo"') > home.indexOf('id="why"')) {
+	errors.push('index.html: product demo must appear before the benefit chapters');
+}
+for (const label of ['data-play-label="Play demo"', 'data-pause-label="Pause demo"']) {
+	if (!home.includes(label)) errors.push(`index.html: missing simplified product video control ${label}`);
+}
 
 for (const requiredVideoMarkup of [
 	'data-compare-surface',
@@ -154,6 +163,22 @@ if (!/\.media-toggle\s*\{[\s\S]*?min-width:\s*44px[\s\S]*?min-height:\s*44px/.te
 	errors.push('global.css: media controls are smaller than 44px');
 }
 
+const productVideoSource = await readFile(new URL('../src/components/ProductVideo.astro', import.meta.url), 'utf8');
+for (const behavior of [
+	'prefers-reduced-motion: reduce',
+	'let explicitlyPaused = false',
+	'entry.intersectionRatio >= 0.35',
+	'preloadObserver',
+	'playbackObserver',
+	'video.play()',
+	'loop',
+]) {
+	if (!productVideoSource.includes(behavior)) errors.push(`ProductVideo.astro: missing ${behavior}`);
+}
+if (productVideoSource.includes('Play the 25-second demo') || productVideoSource.includes('Pause the 25-second demo')) {
+	errors.push('ProductVideo.astro: verbose 25-second control labels remain');
+}
+
 const support = await readFile(new URL('support/index.html', dist), 'utf8');
 for (const value of [
 	'mailto:support@photodays.app',
@@ -174,6 +199,10 @@ for (const [name, dimensions] of Object.entries({
 	video: [1206, 2622],
 	reminder: [1206, 2622],
 	privacy: [1206, 2622],
+	'chart-date-elapsed': [1206, 2622],
+	'chart-year-activity': [1206, 2622],
+	'achievements-profile': [1206, 2622],
+	'achievements-grid': [1206, 2622],
 	share: [1206, 2622],
 })) {
 	await checkImage(new URL(`../src/assets/screens/${name}.png`, import.meta.url), dimensions, `${name}.png`);
@@ -192,8 +221,8 @@ const provenance = JSON.parse(await readFile(new URL('media/provenance.json', di
 if (provenance.schemaVersion !== 3) errors.push('media/provenance.json: schema version 3 missing');
 if (provenance.sources?.photoSequence?.ids?.length !== 35) errors.push('media/provenance.json: 35 source photo IDs missing');
 const websiteScreens = provenance.transformations?.websiteScreens;
-if (Object.keys(websiteScreens?.publishedScreens ?? {}).length !== 9) {
-	errors.push('media/provenance.json: nine published website screen checksums missing');
+if (Object.keys(websiteScreens?.publishedScreens ?? {}).length !== 13) {
+	errors.push('media/provenance.json: thirteen published website screen checksums missing');
 }
 for (const [publishedName, sourceName] of Object.entries({
 	'home.png': '01-home-365-days.png',
@@ -204,6 +233,10 @@ for (const [publishedName, sourceName] of Object.entries({
 	'video.png': '09-video-ready.png',
 	'reminder.png': '10-reminder-enabled.png',
 	'privacy.png': '11-privacy-settings.png',
+	'chart-date-elapsed.png': 'Charts-and-Achievements/chart-date-elapsed.png',
+	'chart-year-activity.png': 'Charts-and-Achievements/chart-year-activity.png',
+	'achievements-profile.png': 'Charts-and-Achievements/streak-profile.png',
+	'achievements-grid.png': 'Charts-and-Achievements/achievements-grid.png',
 })) {
 	if (websiteScreens?.sourceFiles?.[publishedName] !== sourceName) {
 		errors.push(`media/provenance.json: ${publishedName} source mapping is incorrect`);

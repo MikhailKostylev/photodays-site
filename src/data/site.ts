@@ -79,6 +79,23 @@ export const copy = {
 		title: 'See the whole journey in 25 seconds.',
 		body: 'Follow 35 moments across 365 days—from a quiet reminder to an aligned capture, a clear comparison and a progress film ready to share.',
 	},
+	insights: {
+		eyebrow: 'More than a before and after',
+		title: 'See the pattern. Celebrate the progress.',
+		body: 'PhotoDays helps you understand where each journey is heading—and remember the consistency that moved it forward.',
+		items: [
+			{
+				title: 'Know where the journey is heading.',
+				body: 'Each album turns the progress you record into clear charts, so you can see the trend behind individual photos.',
+				proof: 'Charts for every album',
+			},
+			{
+				title: 'Let consistency feel rewarding.',
+				body: 'Your app-wide profile brings streaks and achievements together, giving every return a place in the bigger story.',
+				proof: 'One profile across all your journeys',
+			},
+		],
+	},
 	uses: {
 		eyebrow: 'One app. Many kinds of change.',
 		title: 'Whatever grows slowly deserves a better way to see it.',

@@ -123,7 +123,21 @@ async function writeProvenance() {
 	}
 
 	const screens = {};
-	for (const name of ['home', 'progress', 'gallery', 'camera', 'compare', 'video', 'reminder', 'privacy', 'share']) {
+	for (const name of [
+		'home',
+		'progress',
+		'gallery',
+		'camera',
+		'compare',
+		'video',
+		'reminder',
+		'privacy',
+		'chart-date-elapsed',
+		'chart-year-activity',
+		'achievements-profile',
+		'achievements-grid',
+		'share',
+	]) {
 		screens[`${name}.png`] = await sha256(resolve(`src/assets/screens/${name}.png`));
 	}
 
@@ -136,6 +150,10 @@ async function writeProvenance() {
 		'video.png': '09-video-ready.png',
 		'reminder.png': '10-reminder-enabled.png',
 		'privacy.png': '11-privacy-settings.png',
+		'chart-date-elapsed.png': 'Charts-and-Achievements/chart-date-elapsed.png',
+		'chart-year-activity.png': 'Charts-and-Achievements/chart-year-activity.png',
+		'achievements-profile.png': 'Charts-and-Achievements/streak-profile.png',
+		'achievements-grid.png': 'Charts-and-Achievements/achievements-grid.png',
 	};
 
 	const output = {

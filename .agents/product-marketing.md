@@ -31,6 +31,8 @@ Primary promise:
 - A flexible rhythm supported by reminders and streaks.
 - Aligned before-and-after comparisons.
 - A progress film made from the user’s own moments.
+- Clear album-level charts that reveal direction and patterns over time.
+- App-wide achievements that make consistency feel visible and rewarding.
 - Private, local-first storage with optional iCloud and Face ID protection.
 
 ## Approved product claims
@@ -39,6 +41,8 @@ Primary promise:
 - The camera can use a previous photo and alignment guidance for consistent framing.
 - Users can compare two dates.
 - PhotoDays can create progress videos and GIFs.
+- Each album can visualize recorded progress in charts.
+- Streaks, achievements and the achievement profile span the app’s journeys.
 - Photos and progress data are stored on the device.
 - iCloud sync is optional.
 - Face ID can protect the app or individual albums.

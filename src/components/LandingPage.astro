@@ -3,7 +3,11 @@ import { Picture } from 'astro:assets';
 import appIcon from '../assets/app-icon.png';
 import dayOne from '../assets/demo/day-1.jpg';
 import day365 from '../assets/demo/day-365.jpg';
+import achievementsGridScreen from '../assets/screens/achievements-grid.png';
+import achievementsProfileScreen from '../assets/screens/achievements-profile.png';
 import cameraScreen from '../assets/screens/camera.png';
+import chartDateElapsedScreen from '../assets/screens/chart-date-elapsed.png';
+import chartYearActivityScreen from '../assets/screens/chart-year-activity.png';
 import compareScreen from '../assets/screens/compare.png';
 import galleryScreen from '../assets/screens/gallery.png';
 import homeScreen from '../assets/screens/home.png';
@@ -107,6 +111,26 @@ const flowAlts = [
 		/>
 	</section>
 
+	<section class="demo section-shell" id="demo" aria-labelledby="demo-title">
+		<div class="demo-card">
+			<div class="demo-copy">
+				<div class="eyebrow">{copy.demo.eyebrow}</div>
+				<h2 id="demo-title">{copy.demo.title}</h2>
+				<p>{copy.demo.body}</p>
+				<div class="demo-sequence" aria-label="Product demo chapters">
+					<span>Capture</span>
+					<i aria-hidden="true"></i>
+					<span>Compare</span>
+					<i aria-hidden="true"></i>
+					<span>Create</span>
+				</div>
+			</div>
+			<div class="demo-media">
+				<ProductVideo />
+			</div>
+		</div>
+	</section>
+
 	<section class="benefits section-shell" id="why" aria-labelledby="benefits-title">
 		<header class="benefits-intro">
 			<div class="eyebrow">Not more photos. More meaning.</div>
@@ -177,23 +201,53 @@ const flowAlts = [
 		</ol>
 	</section>
 
-	<section class="demo section-shell" id="demo" aria-labelledby="demo-title">
-		<div class="demo-card">
-			<div class="demo-copy">
-				<div class="eyebrow">{copy.demo.eyebrow}</div>
-				<h2 id="demo-title">{copy.demo.title}</h2>
-				<p>{copy.demo.body}</p>
-				<div class="demo-sequence" aria-label="Product demo chapters">
-					<span>Capture</span>
-					<i aria-hidden="true"></i>
-					<span>Compare</span>
-					<i aria-hidden="true"></i>
-					<span>Create</span>
+	<section class="insights section-shell" aria-labelledby="insights-title">
+		<header class="insights-intro">
+			<div class="eyebrow">{copy.insights.eyebrow}</div>
+			<h2 id="insights-title">{copy.insights.title}</h2>
+			<p>{copy.insights.body}</p>
+		</header>
+		<div class="insights-grid">
+			<article class="insight-card insight-card-charts">
+				<div class="insight-copy">
+					<span class="chapter-number">01</span>
+					<h3>{copy.insights.items[0].title}</h3>
+					<p>{copy.insights.items[0].body}</p>
+					<span class="benefit-proof"><span aria-hidden="true">↗</span>{copy.insights.items[0].proof}</span>
 				</div>
-			</div>
-			<div class="demo-media">
-				<ProductVideo />
-			</div>
+				<div class="insight-visual">
+					<PhoneFrame
+						src={chartDateElapsedScreen}
+						alt="PhotoDays album chart showing progress across 365 days"
+						class="insight-phone insight-phone-main"
+					/>
+					<PhoneFrame
+						src={chartYearActivityScreen}
+						alt="PhotoDays album chart showing a year of recorded activity"
+						class="insight-phone insight-phone-secondary"
+					/>
+				</div>
+			</article>
+			<article class="insight-card insight-card-achievements">
+				<div class="insight-copy">
+					<span class="chapter-number">02</span>
+					<h3>{copy.insights.items[1].title}</h3>
+					<p>{copy.insights.items[1].body}</p>
+					<span class="benefit-proof"><span aria-hidden="true">↗</span>{copy.insights.items[1].proof}</span>
+				</div>
+				<div class="insight-visual">
+					<PhoneFrame
+						src={achievementsProfileScreen}
+						alt="PhotoDays app-wide profile showing a 365-day series and achievements"
+						class="insight-phone insight-phone-main"
+					/>
+					<PhoneFrame
+						src={achievementsGridScreen}
+						alt="PhotoDays achievement collection and recent rewards"
+						class="insight-phone insight-phone-secondary"
+					/>
+				</div>
+			</article>
 		</div>
 	</section>
 

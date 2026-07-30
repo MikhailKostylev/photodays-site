@@ -8,6 +8,7 @@ import poster from '../assets/video/product-demo-poster.webp';
 		preload="none"
 		muted
 		playsinline
+		loop
 		poster={poster.src}
 		aria-describedby="product-video-description"
 	>
@@ -17,13 +18,13 @@ import poster from '../assets/video/product-demo-poster.webp';
 		class="media-toggle product-video-toggle"
 		type="button"
 		data-product-video-toggle
-		data-play-label="Play the 25-second demo"
-		data-pause-label="Pause the 25-second demo"
-		aria-label="Play the 25-second demo"
+		data-play-label="Play demo"
+		data-pause-label="Pause demo"
+		aria-label="Play demo"
 		aria-pressed="false"
 	>
 		<span data-product-video-icon aria-hidden="true">▶</span>
-		<span data-product-video-label>Play the 25-second demo</span>
+		<span data-product-video-label>Play demo</span>
 	</button>
 </div>
 <p class="video-description" id="product-video-description">
@@ -42,7 +43,10 @@ import poster from '../assets/video/product-demo-poster.webp';
 		const text = root.querySelector<HTMLElement>('[data-product-video-label]');
 		if (!video || !source || !toggle || !icon || !text) return;
 
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 		let loaded = false;
+		let visible = false;
+		let explicitlyPaused = false;
 		const load = () => {
 			if (loaded || !source.dataset.src) return;
 			source.src = source.dataset.src;
@@ -57,28 +61,44 @@ import poster from '../assets/video/product-demo-poster.webp';
 			text.textContent = label ?? '';
 			icon.textContent = playing ? 'Ⅱ' : '▶';
 		};
-		const togglePlayback = async () => {
-			if (!video.paused) {
-				video.pause();
-				return;
-			}
+		const play = async () => {
 			load();
 			try { await video.play(); } catch { updateControl(); }
 		};
 
-		toggle.addEventListener('click', togglePlayback);
+		toggle.addEventListener('click', () => {
+			if (video.paused) {
+				explicitlyPaused = false;
+				play();
+			} else {
+				explicitlyPaused = true;
+				video.pause();
+			}
+		});
 		video.addEventListener('play', updateControl);
 		video.addEventListener('pause', updateControl);
-		video.addEventListener('ended', updateControl);
 
-		const observer = new IntersectionObserver(([entry]) => {
-			if (entry.isIntersecting) load();
-			if (!entry.isIntersecting && !video.paused) video.pause();
-		}, { rootMargin: '320px 0px', threshold: 0.05 });
-		observer.observe(root);
+		const preloadObserver = new IntersectionObserver(([entry]) => {
+			if (!entry.isIntersecting) return;
+			load();
+			preloadObserver.disconnect();
+		}, { rootMargin: '360px 0px', threshold: 0 });
+		preloadObserver.observe(root);
+
+		const playbackObserver = new IntersectionObserver(([entry]) => {
+			visible = entry.isIntersecting && entry.intersectionRatio >= 0.35;
+			if (visible && !reducedMotion.matches && !explicitlyPaused) play();
+			if (!visible && !video.paused) video.pause();
+		}, { threshold: [0, 0.35, 0.7] });
+		playbackObserver.observe(root);
 
 		document.addEventListener('visibilitychange', () => {
 			if (document.hidden && !video.paused) video.pause();
+			else if (!document.hidden && visible && !reducedMotion.matches && !explicitlyPaused) play();
+		});
+		reducedMotion.addEventListener('change', (event) => {
+			if (event.matches) video.pause();
+			else if (visible && !explicitlyPaused) play();
 		});
 		updateControl();
 	});
