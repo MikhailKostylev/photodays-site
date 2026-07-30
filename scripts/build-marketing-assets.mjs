@@ -123,12 +123,23 @@ async function writeProvenance() {
 	}
 
 	const screens = {};
-	for (const name of ['home', 'progress', 'camera', 'compare', 'video', 'share']) {
+	for (const name of ['home', 'progress', 'gallery', 'camera', 'compare', 'video', 'reminder', 'privacy', 'share']) {
 		screens[`${name}.png`] = await sha256(resolve(`src/assets/screens/${name}.png`));
 	}
 
+	const websiteScreenSources = {
+		'home.png': '01-home-365-days.png',
+		'progress.png': '03-progress-18-days.png',
+		'gallery.png': '04-gallery-camera-roll.png',
+		'camera.png': '05-camera-face-alignment.png',
+		'compare.png': '06-compare-split.png',
+		'video.png': '09-video-ready.png',
+		'reminder.png': '10-reminder-enabled.png',
+		'privacy.png': '11-privacy-settings.png',
+	};
+
 	const output = {
-		schemaVersion: 2,
+		schemaVersion: 3,
 		generatedAt: '2026-07-30T00:00:00Z',
 		sources: {
 			photoSequence: {
@@ -170,7 +181,16 @@ async function writeProvenance() {
 				frameRate: 30,
 				audioTracks: 0,
 				fastStart: true,
-				extractedScreens: screens,
+				extractedScreens: {
+					'share.png': screens['share.png'],
+				},
+			},
+			websiteScreens: {
+				source: 'ProgressTrackerMarketingDemo deterministic captures',
+				captureDate: '2026-07-25T12:00:00+03:00',
+				dimensions: '1206x2622',
+				sourceFiles: websiteScreenSources,
+				publishedScreens: screens,
 			},
 		},
 		outputs: {

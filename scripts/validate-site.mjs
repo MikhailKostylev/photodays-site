@@ -102,7 +102,7 @@ const home = await readFile(new URL('index.html', dist), 'utf8');
 for (const phrase of [
 	'See the change you’re too close to notice.',
 	'Your memory misses small changes. Your photos don’t.',
-	'35 moments. One visible story.',
+	'35 moments across 365 days.',
 	'See the whole journey in 25 seconds.',
 	'Coming soon on the App Store',
 	'Day 1',
@@ -170,7 +170,10 @@ for (const [name, dimensions] of Object.entries({
 	progress: [1206, 2622],
 	camera: [1206, 2622],
 	compare: [1206, 2622],
+	gallery: [1206, 2622],
 	video: [1206, 2622],
+	reminder: [1206, 2622],
+	privacy: [1206, 2622],
 	share: [1206, 2622],
 })) {
 	await checkImage(new URL(`../src/assets/screens/${name}.png`, import.meta.url), dimensions, `${name}.png`);
@@ -186,8 +189,39 @@ await checkVideo('media/photodays-progress-film.mp4', [720, 900], 2_500_000, [4,
 await checkVideo('media/photodays-product-demo.mp4', [720, 1566], 6_000_000, [24.8, 25.3]);
 
 const provenance = JSON.parse(await readFile(new URL('media/provenance.json', dist), 'utf8'));
-if (provenance.schemaVersion !== 2) errors.push('media/provenance.json: schema version 2 missing');
+if (provenance.schemaVersion !== 3) errors.push('media/provenance.json: schema version 3 missing');
 if (provenance.sources?.photoSequence?.ids?.length !== 35) errors.push('media/provenance.json: 35 source photo IDs missing');
+const websiteScreens = provenance.transformations?.websiteScreens;
+if (Object.keys(websiteScreens?.publishedScreens ?? {}).length !== 9) {
+	errors.push('media/provenance.json: nine published website screen checksums missing');
+}
+for (const [publishedName, sourceName] of Object.entries({
+	'home.png': '01-home-365-days.png',
+	'progress.png': '03-progress-18-days.png',
+	'gallery.png': '04-gallery-camera-roll.png',
+	'camera.png': '05-camera-face-alignment.png',
+	'compare.png': '06-compare-split.png',
+	'video.png': '09-video-ready.png',
+	'reminder.png': '10-reminder-enabled.png',
+	'privacy.png': '11-privacy-settings.png',
+})) {
+	if (websiteScreens?.sourceFiles?.[publishedName] !== sourceName) {
+		errors.push(`media/provenance.json: ${publishedName} source mapping is incorrect`);
+	}
+	const path = new URL(`../src/assets/screens/${publishedName}`, import.meta.url);
+	const actual = createHash('sha256').update(await readFile(path)).digest('hex');
+	if (websiteScreens?.publishedScreens?.[publishedName] !== actual) {
+		errors.push(`media/provenance.json: ${publishedName} checksum mismatch`);
+	}
+}
+const shareScreenshot = await readFile(new URL('../src/assets/screens/share.png', import.meta.url));
+const shareChecksum = createHash('sha256').update(shareScreenshot).digest('hex');
+if (
+	websiteScreens?.publishedScreens?.['share.png'] !== shareChecksum
+	|| provenance.transformations?.productDemo?.extractedScreens?.['share.png'] !== shareChecksum
+) {
+	errors.push('media/provenance.json: share.png checksum mismatch');
+}
 if (!provenance.transformations?.productDemo?.operation?.includes('first 0.3 seconds')) {
 	errors.push('media/provenance.json: clean Home-frame replacement is undocumented');
 }
@@ -215,7 +249,8 @@ for (const file of distFiles) {
 		/production.*master|trial.*recap|onboarding_trial|\.m4v$/i.test(file)
 		|| /(?:^|\/)\d{2}_original_\d{2}\.png$/i.test(file)
 		|| /PhotoDays_sequence_01-35/i.test(file)
-		|| /first\.(?:jpg|png)|latest\.(?:jpg|png)|reminder\.|settings\./i.test(file)
+		|| /first\.(?:jpg|png)|latest\.(?:jpg|png)/i.test(file)
+		|| /(?:^|\/)\d{2}-(?:home|progress|gallery|camera|compare|video|reminder|privacy)-[^/]+\.png$/i.test(file)
 	) {
 		errors.push(`${file}: source, recap or superseded placeholder media leaked into dist`);
 	}

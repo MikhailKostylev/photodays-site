@@ -27,7 +27,8 @@ The App Store URL is intentionally `null` in `src/config.ts`. Add the released a
 The landing page uses approved real PhotoDays photography and product recordings:
 
 - 35 aligned source portraits produce the Day 1 / Day 365 comparison and 4.4-second progress film.
-- The 25.1-second July 29 product recording produces the main demo and six supporting app screens.
+- The 25.1-second July 29 product recording produces the main demo and saved-video/share proof.
+- Deterministic `ProgressTrackerMarketingDemo` captures provide the Home, timeline, camera, comparison, progress, video, reminder and privacy states used beside the site copy.
 - The original first 0.3 seconds of the product recording are replaced with its clean Home frame.
 - The recap, master recording, M4V files and original 35 PNG files are never copied into `public` or `dist`.
 

@@ -5,8 +5,11 @@ import dayOne from '../assets/demo/day-1.jpg';
 import day365 from '../assets/demo/day-365.jpg';
 import cameraScreen from '../assets/screens/camera.png';
 import compareScreen from '../assets/screens/compare.png';
+import galleryScreen from '../assets/screens/gallery.png';
 import homeScreen from '../assets/screens/home.png';
+import privacyScreen from '../assets/screens/privacy.png';
 import progressScreen from '../assets/screens/progress.png';
+import reminderScreen from '../assets/screens/reminder.png';
 import shareScreen from '../assets/screens/share.png';
 import videoScreen from '../assets/screens/video.png';
 import { copy } from '../data/site';
@@ -18,18 +21,18 @@ import PhoneFrame from './PhoneFrame.astro';
 import ProductVideo from './ProductVideo.astro';
 import ProgressLoop from './ProgressLoop.astro';
 
-const benefitScreens = [compareScreen, homeScreen, progressScreen, shareScreen];
+const benefitScreens = [compareScreen, galleryScreen, progressScreen, shareScreen];
 const benefitAlts = [
 	'PhotoDays comparison screen showing Day 1 and Day 365',
-	'PhotoDays journal home screen with a dedicated album',
-	'PhotoDays progress screen with a goal and streak',
+	'PhotoDays timeline organizing progress photos by date',
+	'PhotoDays progress screen showing an 18-day streak and 95% goal progress',
 	'PhotoDays share sheet after saving a progress film',
 ];
-const flowScreens = [cameraScreen, homeScreen, videoScreen];
+const flowScreens = [cameraScreen, reminderScreen, videoScreen];
 const flowAlts = [
 	'PhotoDays camera with alignment guidance',
-	'PhotoDays visual journal ready for the next entry',
-	'PhotoDays progress-film editor',
+	'PhotoDays daily reminder enabled for 8 PM',
+	'PhotoDays progress film ready to play',
 ];
 ---
 
@@ -146,7 +149,7 @@ const flowAlts = [
 				<h2 id="film-title">{copy.progressFilm.title}</h2>
 				<p>{copy.progressFilm.body}</p>
 				<div class="film-days" aria-hidden="true">
-					<span>01</span><i></i><span>35</span>
+					<span>Day 1</span><i></i><span>Day 365</span>
 				</div>
 			</div>
 			<ProgressLoop />
@@ -223,13 +226,15 @@ const flowAlts = [
 				</ul>
 				<a class="text-link" href="/privacy/">{copy.privacy.link}<span aria-hidden="true">→</span></a>
 			</div>
-			<div class="privacy-visual" aria-hidden="true">
+			<div class="privacy-visual">
 				<div class="privacy-orbit privacy-orbit-one"></div>
 				<div class="privacy-orbit privacy-orbit-two"></div>
-				<div class="privacy-lock">
-					<Picture src={appIcon} formats={['avif', 'webp']} widths={[144, 288]} alt="" />
-					<span>Private by design</span>
-				</div>
+				<PhoneFrame
+					src={privacyScreen}
+					alt="PhotoDays settings with optional iCloud sync and biometric privacy enabled"
+					class="privacy-phone"
+				/>
+				<span class="privacy-proof-badge">Your settings. Your choice.</span>
 			</div>
 		</div>
 	</section>

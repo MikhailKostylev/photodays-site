@@ -53,7 +53,7 @@ export const copy = {
 	],
 	progressFilm: {
 		eyebrow: 'Time, compressed',
-		title: '35 moments. One visible story.',
+		title: '35 moments across 365 days.',
 		body: 'No single photo has to feel dramatic. The meaning appears when PhotoDays brings the whole sequence together.',
 	},
 	flow: {
@@ -77,7 +77,7 @@ export const copy = {
 	demo: {
 		eyebrow: 'The full product story',
 		title: 'See the whole journey in 25 seconds.',
-		body: 'From a quiet reminder to an aligned capture, a clear comparison and a progress film ready to share.',
+		body: 'Follow 35 moments across 365 days—from a quiet reminder to an aligned capture, a clear comparison and a progress film ready to share.',
 	},
 	uses: {
 		eyebrow: 'One app. Many kinds of change.',

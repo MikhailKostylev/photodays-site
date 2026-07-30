@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "generatedAt": "2026-07-30T00:00:00Z",
   "sources": {
     "photoSequence": {
@@ -299,11 +299,32 @@
       "audioTracks": 0,
       "fastStart": true,
       "extractedScreens": {
-        "home.png": "ce3232bd5c248713cb67535e421fa462f6681ddb4e9782258e3f818248693853",
-        "progress.png": "4ecf07765dd2c81f184c8264b563b8f87921b90cf84b7009652445c9185b59ef",
-        "camera.png": "817341eacc92529355a4e4ef4d495ee6d9298f271aa5d0e9f283452a4b8c2b8b",
-        "compare.png": "654636009b7cfe0a5d813df7b46ca2a6f32d5eeac8b28a859c51ce6606f203c6",
-        "video.png": "a261416995a9ed932cbd3d1183216212ecee4ebfa1992ecbf7c6ab26ff40e965",
+        "share.png": "4c2fc8fdc91c0528207584e25f0038cdbdcc3612e28c1e134042a26cc0c02d2b"
+      }
+    },
+    "websiteScreens": {
+      "source": "ProgressTrackerMarketingDemo deterministic captures",
+      "captureDate": "2026-07-25T12:00:00+03:00",
+      "dimensions": "1206x2622",
+      "sourceFiles": {
+        "home.png": "01-home-365-days.png",
+        "progress.png": "03-progress-18-days.png",
+        "gallery.png": "04-gallery-camera-roll.png",
+        "camera.png": "05-camera-face-alignment.png",
+        "compare.png": "06-compare-split.png",
+        "video.png": "09-video-ready.png",
+        "reminder.png": "10-reminder-enabled.png",
+        "privacy.png": "11-privacy-settings.png"
+      },
+      "publishedScreens": {
+        "home.png": "50eca2ede791dc3db0be9a6de7abed6a6033ee5d753d430e22f313be626e64ae",
+        "progress.png": "2d6ff93eb381b632b84554908c253f0ef653c42c6e0f93384f011e9e6b1123d0",
+        "gallery.png": "1a35b0e6206533017e4903eac765f75f1ec42da38eedeb7fd3cdd233ce9d9c5c",
+        "camera.png": "927d6c93fe2fbb05060257de0c2219205fd3ef31497ea3413956cd336fb2f543",
+        "compare.png": "170acc936e0240ef4861f66f3e761c71f4715d5161dea4c92465b3e4e02be3ec",
+        "video.png": "8661b575014d3cdc2d87302ce441c6ddaa0ca56fb318621b7da607984a1ec659",
+        "reminder.png": "0caf730984a6efd5cb3edf94e33875ae941d6c02b55b00edb1d3cf5b4b7fbe1c",
+        "privacy.png": "7c8ee33f2d94b25817cd003d9c4a8f263aa3dbb6990bc36c2a73b1d57ff6bf1f",
         "share.png": "4c2fc8fdc91c0528207584e25f0038cdbdcc3612e28c1e134042a26cc0c02d2b"
       }
     }
@@ -315,6 +336,6 @@
     "progressPoster": "4f9ac8c135967d0d272926c4326362340f4110ede88706666813dd21b6af16bd",
     "productDemo": "912b48f92a1e5c40b5bfe486d52987afe05e9c7a6ed6ccae2c742697b5058746",
     "productPoster": "9c3e97bbf16f307b92abc3746445f224012757d11fdd1c544fee344d13a853a5",
-    "openGraph": "0157505ed0fe942a2bd82583ad77890e007fa2e510cb42095718b45112dbdd1d"
+    "openGraph": "30bc2d1f32a4c008ab655236f3d49c25e1bdbb39f5091e65bd6317461ead4221"
   }
 }
