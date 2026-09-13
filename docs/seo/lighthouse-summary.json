@@ -1,0 +1,90 @@
+{
+  "environment": "Local production build served by Astro preview; lab data, not Google field data",
+  "audits": [
+    {
+      "page": "home_mobile",
+      "lighthouse_version": "13.4.1",
+      "tested_at": "2026-09-13T20:40:07.815Z",
+      "categories": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": "0.8\u00a0s",
+        "largest-contentful-paint": "2.0\u00a0s",
+        "cumulative-layout-shift": "0",
+        "total-blocking-time": "0\u00a0ms"
+      }
+    },
+    {
+      "page": "home_desktop",
+      "lighthouse_version": "13.4.1",
+      "tested_at": "2026-09-13T20:42:51.704Z",
+      "categories": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": "0.2\u00a0s",
+        "largest-contentful-paint": "0.4\u00a0s",
+        "cumulative-layout-shift": "0",
+        "total-blocking-time": "0\u00a0ms"
+      }
+    },
+    {
+      "page": "photo_diary_mobile",
+      "lighthouse_version": "13.4.1",
+      "tested_at": "2026-09-13T20:43:36.188Z",
+      "categories": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": "0.8\u00a0s",
+        "largest-contentful-paint": "1.1\u00a0s",
+        "cumulative-layout-shift": "0",
+        "total-blocking-time": "0\u00a0ms"
+      }
+    },
+    {
+      "page": "progress_photos_mobile",
+      "lighthouse_version": "13.4.1",
+      "tested_at": "2026-09-13T20:48:30.089Z",
+      "categories": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": "0.8\u00a0s",
+        "largest-contentful-paint": "1.2\u00a0s",
+        "cumulative-layout-shift": "0",
+        "total-blocking-time": "0\u00a0ms"
+      }
+    },
+    {
+      "page": "photo_video_mobile",
+      "lighthouse_version": "13.4.1",
+      "tested_at": "2026-09-13T20:49:28.017Z",
+      "categories": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": "0.8\u00a0s",
+        "largest-contentful-paint": "1.1\u00a0s",
+        "cumulative-layout-shift": "0",
+        "total-blocking-time": "0\u00a0ms"
+      }
+    }
+  ]
+}

@@ -16,9 +16,10 @@ const { src, alt, class: className, priority = false } = Astro.props;
 	<div class="phone-screen">
 		<Picture
 			src={src}
+            width={520}
 			formats={['avif', 'webp']}
 			widths={[260, 390, 520]}
-			sizes="(max-width: 720px) 52vw, 320px"
+			sizes="(max-width: 760px) 245px, 260px"
 			alt={alt}
 			loading={priority ? 'eager' : 'lazy'}
 			fetchpriority={priority ? 'high' : 'auto'}

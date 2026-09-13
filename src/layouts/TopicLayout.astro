@@ -1,0 +1,28 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { siteConfig } from '../config';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PhoneFrame from '../components/PhoneFrame.astro';
+import AppStoreCTA from '../components/AppStoreCTA.astro';
+import FAQ from '../components/FAQ.astro';
+import TopicLinks from '../components/TopicLinks.astro';
+import { topics } from '../data/topics';
+interface Props { topic: typeof topics[number] }
+const { topic } = Astro.props;
+---
+<BaseLayout title={topic.title} description={topic.description} canonicalPath={topic.path} breadcrumbLabel={topic.label}>
+ <Header />
+ <main id="main-content">
+  <section class="topic-hero section-shell"><div><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">PhotoDays</a><span aria-hidden="true">/</span><span aria-current="page">{topic.label}</span></nav><p class="eyebrow">{topic.eyebrow}</p><h1>{topic.heading}</h1><p class="hero-description">{topic.lead}</p><div class="hero-actions"><a class="button-link" href="/#demo">Watch PhotoDays <span aria-hidden="true">↗</span></a><AppStoreCTA /></div></div><div class="topic-hero-image"><PhoneFrame src={topic.image} alt={topic.imageAlt} priority /></div></section>
+  <article class="topic-article section-shell">
+   <div class="topic-intro"><p class="eyebrow">{topic.number} / {topic.label}</p><div><h2>{topic.introHeading}</h2><p>{topic.intro}</p></div></div>
+   <section class="topic-steps"><h2>{topic.stepsHeading}</h2><ol>{topic.steps.map((step, index) => <li><span class="step-number">0{index + 1}</span><h3>{step.title}</h3><p>{step.body}</p></li>)}</ol></section>
+   <section class="topic-advice"><div><h2>{topic.adviceHeading}</h2><p>{topic.advice}</p></div><ul>{topic.tips.map(tip => <li>{tip}</li>)}</ul></section>
+   <section class="topic-limits"><h2>{topic.limitsHeading}</h2><p>{topic.limits}</p></section>
+  </article>
+  <section class="section-shell faq-section"><div><p class="eyebrow">Good to know</p><h2>Your questions,<br />answered.</h2></div><FAQ items={topic.faq} /></section>
+  <section class="section-shell section-block"><p class="eyebrow">More ways to use PhotoDays</p><h2>Keep the story going.</h2><TopicLinks exclude={topic.path} /></section>
+  <section class="final-cta section-shell"><p class="eyebrow">{siteConfig.appStoreUrl ? 'PhotoDays for iPhone & iPad' : 'Coming soon for iPhone & iPad'}</p><h2>Your next chapter<br /><em>starts with a photo.</em></h2><div class="hero-actions"><a class="button-link" href="/#demo">See PhotoDays in action <span aria-hidden="true">↗</span></a><AppStoreCTA /></div></section>
+ </main><Footer />
+</BaseLayout>

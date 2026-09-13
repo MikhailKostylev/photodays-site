@@ -17,19 +17,23 @@ const { before, after, beforeLabel, afterLabel, label } = Astro.props;
 	<div class="compare-reveal-media" data-compare-surface>
 		<Picture
 			src={after}
+ width={960}
 			formats={['avif', 'webp']}
 			widths={[480, 720, 960, 1280]}
 			sizes="(max-width: 760px) calc(100vw - 40px), 820px"
 			alt={`${afterLabel} progress portrait`}
+ loading="lazy"
 		/>
 		<div class="compare-reveal-before" aria-hidden="true">
 			<div class="compare-reveal-before-inner">
 				<Picture
 					src={before}
+ width={960}
 					formats={['avif', 'webp']}
 					widths={[480, 720, 960, 1280]}
 					sizes="(max-width: 760px) calc(100vw - 40px), 820px"
 					alt=""
+ loading="lazy"
 				/>
 			</div>
 		</div>
@@ -54,7 +58,7 @@ const { before, after, beforeLabel, afterLabel, label } = Astro.props;
 			</span>
 		</div>
 	</div>
-	<p class="compare-reveal-hint">Drag or tap anywhere on the photo to compare.</p>
+	<p class="compare-reveal-hint">Drag to compare. Or focus the divider and use the arrow keys.</p>
 </div>
 
 <script>

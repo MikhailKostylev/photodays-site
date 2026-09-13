@@ -4,7 +4,10 @@ The English marketing, support and legal website for PhotoDays.
 
 ## Public routes
 
-- `/` — benefit-led product landing page
+- `/` — photo diary and progress tracker overview
+- `/photo-diary/` — daily photo diary and journal
+- `/progress-photos/` — progress photo comparison
+- `/photo-progress-video/` — photo progress video workflow
 - `/privacy/`
 - `/terms/`
 - `/support/`
@@ -43,3 +46,9 @@ npm run media:build -- --progress-poster /path/to/progress-poster.png --product-
 ```
 
 Do not commit source recordings or the source photo collection to this public repository.
+
+## SEO and release checks
+
+See [the SEO handoff](docs/seo/README.md) for the keyword map, no-spend Everank list, Search Console setup, 28-day comparison and rollback instructions.
+
+GitHub Actions validates every branch and pull request; only a validated `main` publication deploys to GitHub Pages.

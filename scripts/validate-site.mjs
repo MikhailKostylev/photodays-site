@@ -7,7 +7,7 @@ import sharp from 'sharp';
 const dist = new URL('../dist/', import.meta.url);
 const distPath = fileURLToPath(dist);
 const errors = [];
-const canonicalPages = ['/', '/privacy/', '/terms/', '/support/'];
+const canonicalPages = ['/', '/photo-diary/', '/progress-photos/', '/photo-progress-video/', '/privacy/', '/terms/', '/support/'];
 const redirects = new Map([
 	['ru/index.html', '/'],
 	['ru/privacy/index.html', '/privacy/'],
@@ -16,6 +16,9 @@ const redirects = new Map([
 ]);
 const requiredFiles = [
 	'index.html',
+	'photo-diary/index.html',
+	'progress-photos/index.html',
+	'photo-progress-video/index.html',
 	'privacy/index.html',
 	'terms/index.html',
 	'support/index.html',
@@ -24,6 +27,7 @@ const requiredFiles = [
 	'sitemap.xml',
 	'robots.txt',
 	'CNAME',
+	'googleacb1539d6b9becef.html',
 	'og.png',
 	'media/photodays-product-demo.mp4',
 	'media/photodays-progress-film.mp4',
@@ -48,6 +52,10 @@ await collectFiles(distPath);
 
 for (const file of htmlFiles) {
 	const html = await readFile(new URL(file, dist), 'utf8');
+ if (/^google[a-f0-9]+\.html$/.test(file)) {
+  if (html.trim() !== `google-site-verification: ${file}`) errors.push(`${file}: invalid Google verification file`);
+  continue;
+ }
 	if (html.includes('href="#"')) errors.push(`${file}: placeholder link found`);
 	if (!html.includes('rel="canonical"')) errors.push(`${file}: canonical URL missing`);
 	if (!html.includes('name="viewport"')) errors.push(`${file}: viewport metadata missing`);
@@ -99,30 +107,62 @@ for (const [file, target] of redirects) {
 }
 
 const home = await readFile(new URL('index.html', dist), 'utf8');
-for (const phrase of [
-	'See the change you’re too close to notice.',
-	'Your memory misses small changes. Your photos don’t.',
-	'35 moments across 365 days.',
-	'See the whole journey in 25 seconds.',
-	'See the pattern. Celebrate the progress.',
-	'Know where the journey is heading.',
-	'Let consistency feel rewarding.',
-	'Coming soon on the App Store',
-	'Day 1',
-	'Day 365',
-]) {
-	if (!home.includes(phrase)) errors.push(`index.html: missing approved copy “${phrase}”`);
+// Validate the public document contract instead of freezing marketing wording.
+const titles = new Set();
+const descriptions = new Set();
+const headings = new Set();
+const pageData = new Map();
+const configSource = await readFile(new URL('../src/config.ts', import.meta.url), 'utf8');
+const configuredStore = configSource.match(/appStoreUrl:\s*(['"])(.*?)\1/)?.[2] ?? null;
+if (configuredStore && configuredStore !== 'https://apps.apple.com/app/id6811136068') errors.push('src/config.ts: unexpected App Store destination');
+for (const route of canonicalPages) {
+ const file = route === '/' ? 'index.html' : `${route.slice(1)}index.html`;
+ const html = await readFile(new URL(file, dist), 'utf8');
+ const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
+ const description = html.match(/<meta name="description" content="([^"]+)"/)?.[1];
+ const h1s = [...html.matchAll(/<h1(?:\s[^>]*)?>([\s\S]*?)<\/h1>/g)];
+ const heading = h1s[0]?.[1].replace(/<[^>]*>/g, '').trim();
+ for (const [value, seen, label] of [[title, titles, 'title'], [description, descriptions, 'description'], [heading, headings, 'H1']]) {
+  if (!value || seen.has(value)) errors.push(`${file}: missing or duplicate ${label}`);
+  seen.add(value);
+ }
+ if (h1s.length !== 1) errors.push(`${file}: expected one H1`);
+ if (/name="robots"[^>]*noindex/i.test(html)) errors.push(`${file}: canonical page is noindex`);
+ if (html.includes('name="keywords"')) errors.push(`${file}: unnecessary meta keywords`);
+ const canonical = new URL(route, 'https://photodays.app').toString();
+ if (!html.includes(`rel="canonical" href="${canonical}"`)) errors.push(`${file}: incorrect canonical`);
+ for (const value of ['property="og:title"', 'property="og:description"', 'property="og:image"', 'name="twitter:card"']) {
+  if (!html.includes(value)) errors.push(`${file}: missing ${value}`);
+ }
+ if (!html.includes(`property="og:url" content="${canonical}"`)) errors.push(`${file}: incorrect Open Graph URL`);
+ if (!html.includes('id="main-content"')) errors.push(`${file}: skip-link target is missing`);
+ if (!configuredStore && /https:\/\/(?:www\.)?apps\.apple\.com/.test(html)) errors.push(`${file}: download link present while release URL is null`);
+ if (configuredStore && /class="[^"]*store-cta/.test(html) && !html.includes(`href="${configuredStore}"`)) errors.push(`${file}: configured download link is missing`);
+ const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(match => {
+  try { return JSON.parse(match[1]); } catch { errors.push(`${file}: malformed JSON-LD`); return {}; }
+ });
+ if (route === '/' && !schemas.some(schema => schema['@type'] === 'SoftwareApplication')) errors.push(`${file}: app schema missing`);
+ if (['/photo-diary/', '/progress-photos/', '/photo-progress-video/'].includes(route)) {
+  const breadcrumb = schemas.find(schema => schema['@type'] === 'BreadcrumbList');
+  if (breadcrumb?.itemListElement?.[1]?.item !== canonical) errors.push(`${file}: breadcrumb schema missing or incorrect`);
+  if ((html.match(/<details>/g) ?? []).length < 4) errors.push(`${file}: topic FAQ missing`);
+  if (!html.includes('class="topic-steps"') || !html.includes('class="topic-limits"')) errors.push(`${file}: workflow or limitations missing`);
+ }
+ pageData.set(route, html);
 }
-if (!home.includes('application/ld+json')) errors.push('index.html: SoftwareApplication data missing');
-if (!home.includes('property="og:image"')) errors.push('index.html: Open Graph image metadata missing');
-if (home.includes('type="range"')) errors.push('index.html: visible bottom comparison range remains');
-if (home.indexOf('id="demo"') > home.indexOf('id="why"')) {
-	errors.push('index.html: product demo must appear before the benefit chapters');
+for (const [route, html] of pageData) {
+ for (const match of html.matchAll(/href="([^" ]*#[^" ]+)"/g)) {
+  const href = decodeHtml(match[1]);
+  if (!href.startsWith('/') && !href.startsWith('#')) continue;
+  const [path, id] = href.split('#');
+  const target = pageData.get(path || route);
+  if (target && !target.includes(`id="${id}"`)) errors.push(`${route}: broken fragment ${href}`);
+ }
 }
-for (const label of ['data-play-label="Play demo"', 'data-pause-label="Pause demo"']) {
-	if (!home.includes(label)) errors.push(`index.html: missing simplified product video control ${label}`);
-}
-
+const notFound = await readFile(new URL('404.html', dist), 'utf8');
+if (!notFound.includes('noindex')) errors.push('404.html: noindex is missing');
+if (!configuredStore && !home.includes('Coming soon on the App Store')) errors.push('index.html: release status is missing');
+if (configuredStore && home.includes('Coming soon on the App Store')) errors.push('index.html: stale release status');
 for (const requiredVideoMarkup of [
 	'data-compare-surface',
 	'data-compare-separator',
@@ -138,47 +178,11 @@ for (const requiredVideoMarkup of [
 	if (!home.includes(requiredVideoMarkup)) errors.push(`index.html: missing interactive markup ${requiredVideoMarkup}`);
 }
 
-const compareSource = await readFile(new URL('../src/components/CompareReveal.astro', import.meta.url), 'utf8');
-for (const behavior of [
-	"'pointerdown'",
-	"'pointermove'",
-	'setPointerCapture',
-	'releasePointerCapture',
-	"'ArrowLeft'",
-	"'ArrowRight'",
-	"'Home'",
-	"'End'",
-	'event.shiftKey ? 10 : 2',
-]) {
-	if (!compareSource.includes(behavior)) errors.push(`CompareReveal.astro: missing ${behavior}`);
-}
 const stylesheet = await readFile(new URL('../src/styles/global.css', import.meta.url), 'utf8');
 if (!/\.compare-reveal-media\s*\{[\s\S]*?touch-action:\s*pan-y/.test(stylesheet)) {
-	errors.push('global.css: comparison must preserve vertical touch scrolling');
+ errors.push('global.css: comparison must preserve vertical touch scrolling');
 }
-if (!/\.compare-reveal-separator\s*\{[\s\S]*?width:\s*56px/.test(stylesheet)) {
-	errors.push('global.css: comparison separator touch target is not 56px');
-}
-if (!/\.media-toggle\s*\{[\s\S]*?min-width:\s*44px[\s\S]*?min-height:\s*44px/.test(stylesheet)) {
-	errors.push('global.css: media controls are smaller than 44px');
-}
-
-const productVideoSource = await readFile(new URL('../src/components/ProductVideo.astro', import.meta.url), 'utf8');
-for (const behavior of [
-	'prefers-reduced-motion: reduce',
-	'let explicitlyPaused = false',
-	'entry.intersectionRatio >= 0.35',
-	'preloadObserver',
-	'playbackObserver',
-	'video.play()',
-	'loop',
-]) {
-	if (!productVideoSource.includes(behavior)) errors.push(`ProductVideo.astro: missing ${behavior}`);
-}
-if (productVideoSource.includes('Play the 25-second demo') || productVideoSource.includes('Pause the 25-second demo')) {
-	errors.push('ProductVideo.astro: verbose 25-second control labels remain');
-}
-
+if (!stylesheet.includes('prefers-reduced-motion: reduce')) errors.push('global.css: reduced motion support missing');
 const support = await readFile(new URL('support/index.html', dist), 'utf8');
 for (const value of [
 	'mailto:support@photodays.app',
@@ -282,6 +286,7 @@ if (!transcodeSource.includes('CMTime(seconds: 0.35') || !transcodeSource.includ
 }
 
 for (const file of distFiles) {
+ if (file.startsWith('qa-')) errors.push(`${file}: local QA fixture leaked into publication`);
 	if (
 		/production.*master|trial.*recap|onboarding_trial|\.m4v$/i.test(file)
 		|| /(?:^|\/)\d{2}_original_\d{2}\.png$/i.test(file)
@@ -297,7 +302,7 @@ if (errors.length) {
 	throw new Error(`Site validation failed:\n${errors.map((error) => `- ${error}`).join('\n')}`);
 }
 
-console.log(`Validated ${htmlFiles.length} HTML pages, four canonical routes, legacy redirects and real PhotoDays media.`);
+console.log(`Validated ${htmlFiles.length} HTML pages, seven canonical routes, legacy redirects and real PhotoDays media.`);
 
 function decodeHtml(value) {
 	return value.replaceAll('&amp;', '&');

@@ -1,32 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import appIcon from '../assets/app-icon.png';
-import { copy } from '../data/site';
-import AppStoreCTA from './AppStoreCTA.astro';
-
-interface Props {
-	home?: boolean;
-}
-
+interface Props { home?: boolean }
 const { home = false } = Astro.props;
-const sectionHref = (id: string) => home ? `#${id}` : `/#${id}`;
 ---
-
-<header class="site-header">
-	<div class="header-inner">
-		<a class="brand" href="/" aria-label="PhotoDays home">
-			<Picture src={appIcon} formats={['avif', 'webp']} widths={[48, 96]} alt="" class="brand-icon" />
-			<span>PhotoDays</span>
-		</a>
-		<nav class="desktop-nav" aria-label="Main navigation">
-			<a href={sectionHref('why')}>{copy.nav.why}</a>
-			<a href={sectionHref('compare')}>{copy.nav.compare}</a>
-			<a href={sectionHref('demo')}>{copy.nav.demo}</a>
-			<a href="/privacy/">{copy.nav.privacy}</a>
-			<a href="/support/">{copy.nav.support}</a>
-		</nav>
-		<div class="header-actions">
-			<AppStoreCTA compact />
-		</div>
-	</div>
-</header>
+<header class="site-header"><div class="header-inner"><a class="brand" href="/" aria-label="PhotoDays home"><Picture src={appIcon} width={80} formats={['avif','webp']} widths={[40,80]} sizes="36px" alt="" class="brand-icon" /><span>PhotoDays</span></a><nav class="desktop-nav" aria-label="Main navigation"><a href="/photo-diary/">Photo diary</a><a href="/progress-photos/">Progress photos</a><a href="/photo-progress-video/">Photo videos</a><a href="/support/">Support</a></nav><a class="header-demo" href={home ? '#demo' : '/#demo'}>See it in action <span aria-hidden="true">↗</span></a><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><a href="/photo-diary/">Photo diary</a><a href="/progress-photos/">Progress photos</a><a href="/photo-progress-video/">Photo videos</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a></nav></details></div></header>

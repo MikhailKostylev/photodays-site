@@ -1,0 +1,92 @@
+import gallery from '../assets/screens/gallery.png';
+import compare from '../assets/screens/compare.png';
+import video from '../assets/screens/video.png';
+
+export const topics = [
+ {
+  number: '01', path: '/photo-diary/', label: 'Keep a photo diary',
+  teaser: 'Give everyday moments a place to stay.',
+  title: 'Daily Photo Diary & Photo Journal for iPhone | PhotoDays',
+  description: 'Keep a daily photo diary with PhotoDays for iPhone and iPad. Organize photos and Live Photos, add notes, and build a photo journal at your own pace.',
+  eyebrow: 'Your days, in pictures', heading: 'A photo diary for the life in between.',
+  lead: 'Not every day has a milestone. A daily photo diary makes room for the ordinary moments too: the walk home, a familiar face, the small thing you would otherwise forget.',
+  image: gallery, imageAlt: 'PhotoDays photo journal with photos arranged by date',
+  introHeading: 'One photo can bring a whole day back.',
+  intro: 'PhotoDays is a photo journal for iPhone and iPad. Capture a photo or Live Photo, or import one from your library. Keep it in an album with a date and a note, so it is easy to find when you want to look back. You can keep one album for daily life and separate albums for the stories that deserve their own space.',
+  stepsHeading: 'Start a daily photo diary in three small steps.',
+  steps: [
+   { title: 'Choose what you want to remember.', body: 'Create an album for your everyday life, daily selfies, family moments or a creative project. A clear theme can make it easier to decide which photo belongs in the diary.' },
+   { title: 'Capture or import a moment.', body: 'Take a photo in PhotoDays or bring in a photo or Live Photo from your library. Add a short note: where you were, what happened, or why this particular moment mattered.' },
+   { title: 'Make a little time to look back.', body: 'Browse your calendar and timeline to revisit earlier entries. Set reminders if they help. Your streak gives you a record of returning, while a progress video lets you replay a longer chapter.' },
+  ],
+  adviceHeading: 'Try one photo a day. Leave room for real life.',
+  advice: 'A one-photo-a-day habit gives you an easy starting point, but it does not have to become a rule. You might take a daily selfie for a month, photograph your garden each weekend, or save a moment only when something catches your attention. Missing a day does not make the photos you already have less meaningful.',
+  tips: ['Choose a reminder for a time when you are usually free.', 'Keep notes short enough that adding one feels easy.', 'Use separate albums when two stories have different rhythms.', 'Revisit the month before deciding what to record next.'],
+  limitsHeading: 'A photo-first journal.',
+  limits: 'PhotoDays centers on photos and Live Photos, with notes for context. It is not a text-first writing app or a public social feed. A progress video is made from the moments you choose; PhotoDays does not promise to fill missing days automatically.',
+  faq: [
+   { question: 'What is the difference between a photo diary and a photo journal?', answer: 'People often use the terms for the same idea: a personal record told through pictures. A diary may follow a daily rhythm, while a journal may follow a theme. PhotoDays supports both through dated albums and notes.' },
+   { question: 'Can I keep a daily selfie diary?', answer: 'Yes. Create a selfie album and use your earlier photo as a framing guide when taking the next one. You can compare dates or make a video from the sequence.' },
+   { question: 'Can I use Live Photos?', answer: 'Yes. PhotoDays supports photos and Live Photos, including Live Photo playback. You can capture or import moments into your albums.' },
+   { question: 'Can I start with photos from last month?', answer: 'Yes. Import photos you already have instead of waiting for a new month or year. Keep the dates and notes clear so the timeline tells the story you want to remember.' },
+  ],
+ },
+ {
+  number: '02', path: '/progress-photos/', label: 'See your progress',
+  teaser: 'Compare the first photo with where you are now.',
+  title: 'Progress Photo Tracker for iPhone & iPad | PhotoDays',
+  description: 'Track progress photos in PhotoDays. Use a previous photo to guide your framing, compare two dates, and organize fitness, plant or project photos by album.',
+  eyebrow: 'Give change a little time', heading: 'Progress is easier to see side by side.',
+  lead: 'When you see something every day, small changes are easy to miss. A progress photo tracker gives you an earlier moment to compare with the one in front of you.',
+  image: compare, imageAlt: 'PhotoDays comparison view showing two progress photos from different dates',
+  introHeading: 'Keep the whole sequence, not just before and after.',
+  intro: 'PhotoDays keeps progress photos together in dated albums. Use one for body progress photos, another for a plant, and another for a painting or a room you are improving. Compare any two dates to see what changed between them, and keep notes about the circumstances around each photo.',
+  stepsHeading: 'Build a clearer progress photo record.',
+  steps: [
+   { title: 'Give the project its own album.', body: 'Start with a reference photo and a short note. Decide what you want to observe and choose a rhythm that makes sense: a weekly body progress photo or a regular picture of a longer creative project, for example.' },
+   { title: 'Make the next frame consistent.', body: 'Use the previous photo and camera alignment guidance to help position your next shot. Try to keep the camera distance, angle and lighting similar so it is easier to compare the subject itself.' },
+   { title: 'Compare dates and add context.', body: 'Pick two moments from your album and move through the comparison. Dates and notes help explain what happened between the images. Album charts can also show the activity and progress you have recorded.' },
+  ],
+  adviceHeading: 'Better comparisons start when you take the photo.',
+  advice: 'For fitness progress photos, a similar stance and camera position make the record easier to read. For plants, mark a spot for the pot and keep the camera at the same height. For creative work, include the full object and keep the background simple. The goal is a useful record, not a perfect photograph.',
+  tips: ['Use similar light and avoid switching between strong sunlight and shadow.', 'Keep the distance and framing as consistent as you can.', 'Record useful context in a note instead of relying on memory.', 'Compare an appropriate interval; visible change may take time.'],
+  limitsHeading: 'A visual record, without a verdict.',
+  limits: 'Lighting, pose and camera angle can change how a photo looks. PhotoDays helps you organize and compare your own pictures; it does not analyze your body, calculate body fat or diagnose skin or health conditions. The camera guide helps with framing, but does not guarantee identical photographs.',
+  faq: [
+   { question: 'Can I use PhotoDays for body progress photos?', answer: 'Yes. Keep fitness photos in their own album, return at your chosen interval and compare dates. PhotoDays is a visual journal, rather than a workout planner or a body measurement scanner.' },
+   { question: 'Does PhotoDays automatically align my photos?', answer: 'The camera can show a previous photo and alignment guidance to help you frame the next shot. Consistent lighting, position and distance are still up to you; the app does not promise automatic correction of every image.' },
+   { question: 'Can I track hair, plants or a creative project?', answer: 'Yes. Separate albums let you keep each sequence together. PhotoDays records visual changes without interpreting them or promising a particular outcome.' },
+   { question: 'Can I make a video of my progress?', answer: 'Yes. You can turn an album’s photos into a progress video and export an MP4 or GIF. It is a way to replay the sequence as well as compare individual dates.' },
+  ],
+ },
+ {
+  number: '03', path: '/photo-progress-video/', label: 'Make a photo video',
+  teaser: 'Turn a longer chapter into something you can replay.',
+  title: 'Photo Progress Videos & Photo Time Lapse | PhotoDays',
+  description: 'Turn a series of photos into a progress video with PhotoDays for iPhone and iPad. Build a photo time lapse, add music, and export your story as MP4 or GIF.',
+  eyebrow: 'Let the pictures move', heading: 'A month of moments. A film to keep.',
+  lead: 'A single picture holds a moment. Put a sequence together and you can see the story unfold: a face through the seasons, new leaves appearing, or a project finding its shape.',
+  image: video, imageAlt: 'PhotoDays progress video preview with playback and export controls',
+  introHeading: 'Make a progress video from the photos you collect.',
+  intro: 'PhotoDays brings photo tracking and video creation into the same place. Build your record in an album, then turn your photos into a progress video. You can add music and export an MP4, or create a GIF when a short repeating sequence is a better fit.',
+  stepsHeading: 'From an album to a photo time lapse.',
+  steps: [
+   { title: 'Collect photos around one subject.', body: 'Choose an album with a clear thread: daily selfies, a growing plant, fitness progress or a creative project. Capture new photos or import the pictures you have already taken.' },
+   { title: 'Build and preview the sequence.', body: 'Open the video creator for your album and preview how the photos work together over time. Similar framing helps the change stand out. Add music if you want an audio track for the video.' },
+   { title: 'Export the version you want to keep.', body: 'Save an MP4 video for playback and sharing, or export a GIF for a looping visual. Review the result before sharing it, especially if your photos or notes contain personal details.' },
+  ],
+  adviceHeading: 'A smoother story starts with a consistent frame.',
+  advice: 'A photo time lapse works best when the subject stays in roughly the same position. Use PhotoDays’ previous-photo guide while capturing your sequence. A steady background and similar lighting help keep attention on the changes between frames instead of the movement of the camera.',
+  tips: ['Pick a sequence with one subject or theme.', 'Capture from a similar angle as the album grows.', 'Preview the full result before exporting.', 'Keep the original photo album so you can revisit individual dates.'],
+  limitsHeading: 'A time lapse made from photos.',
+  limits: 'This is a video assembled from a photo sequence, rather than an interval camera that takes photographs automatically. PhotoDays does not promise one-second-per-day video recording, automatic daily filling or a professional video editing timeline. GIF is a silent format; choose MP4 when you want video with music.',
+  faq: [
+   { question: 'What is a photo progress video?', answer: 'It is a sequence of photos played in order so changes become visible over time. You might use it for daily selfies, fitness progress, plant growth or a creative project.' },
+   { question: 'Can I export an MP4 or a GIF?', answer: 'Yes. PhotoDays supports progress-video export as MP4 and GIF. MP4 is the choice for video with music; GIF is a silent repeating image format.' },
+   { question: 'Do I need a photo for every day?', answer: 'No. You can make a video from the moments you have collected. PhotoDays does not automatically create entries for the days you missed.' },
+   { question: 'Is this a one-second video diary?', answer: 'PhotoDays starts with photos and Live Photos and turns a collected sequence into a progress video. It is not a daily one-second video recording workflow.' },
+  ],
+ },
+] as const;
+
+export const canonicalRoutes = ['/', ...topics.map(topic => topic.path), '/privacy/', '/terms/', '/support/'];

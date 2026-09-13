@@ -1,27 +1,4 @@
 ---
-import { Picture } from 'astro:assets';
-import appIcon from '../assets/app-icon.png';
 import { siteConfig } from '../config';
-import { copy } from '../data/site';
-
-const t = copy.footer;
 ---
-
-<footer class="site-footer">
-	<div class="footer-main">
-		<div>
-			<a class="brand footer-brand" href="/">
-				<Picture src={appIcon} formats={['avif', 'webp']} widths={[40, 80]} alt="" class="brand-icon" />
-				<span>PhotoDays</span>
-			</a>
-			<p>{t.tagline}</p>
-		</div>
-		<nav aria-label="Footer links">
-			<a href="/privacy/">{t.privacy}</a>
-			<a href="/terms/">{t.terms}</a>
-			<a href="/support/">{t.support}</a>
-			<a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>
-		</nav>
-	</div>
-	<div class="footer-bottom">© 2026 PhotoDays</div>
-</footer>
+<footer class="site-footer section-shell"><div class="footer-main"><div><a class="brand footer-brand" href="/">PhotoDays<span class="brand-dot" aria-hidden="true">.</span></a><p>A photo diary for the days<br />you want to keep.</p></div><nav aria-label="Explore PhotoDays"><a href="/photo-diary/">Photo diary</a><a href="/progress-photos/">Progress photos</a><a href="/photo-progress-video/">Photo videos</a></nav><nav aria-label="Help and legal"><a href="/support/">Support</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Use</a><a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a></nav></div><div class="footer-bottom"><span>© {new Date().getFullYear()} PhotoDays</span><span>Made for iPhone & iPad</span></div></footer>

@@ -2,11 +2,11 @@
 
 ## Positioning
 
-PhotoDays is a private visual progress journal for iPhone and iPad. It helps people turn scattered progress photos into aligned comparisons and a replayable visual story.
+PhotoDays is a photo diary and progress tracker for iPhone and iPad. It keeps everyday photos and Live Photos in dated albums, supports comparison, and creates progress videos.
 
 Primary promise:
 
-> See the change you’re too close to notice.
+> Life changes. Keep the pictures.
 
 ## Audience
 
@@ -33,7 +33,7 @@ Primary promise:
 - A progress film made from the user’s own moments.
 - Clear album-level charts that reveal direction and patterns over time.
 - App-wide achievements that make consistency feel visible and rewarding.
-- Private, local-first storage with optional iCloud and Face ID protection.
+- Local storage and Face ID or Touch ID protection.
 
 ## Approved product claims
 
@@ -44,7 +44,7 @@ Primary promise:
 - Each album can visualize recorded progress in charts.
 - Streaks, achievements and the achievement profile span the app’s journeys.
 - Photos and progress data are stored on the device.
-- iCloud sync is optional.
+- iCloud is undergoing testing as of September 13, 2026. Do not market sync as a released feature until the release build is verified.
 - Face ID can protect the app or individual albums.
 - The website has no analytics, cookies, account creation or email capture.
 
@@ -66,6 +66,6 @@ Clear, warm, observant and calm. Lead with the human outcome, then use the featu
 
 Before App Store release: `Coming soon on the App Store`.
 
-Secondary landing-page action: `Watch the 25-second demo`.
+Primary pre-release action: watch the 25-second demo. The Coming soon status is informational, not an inactive primary button.
 
 Do not add a fake link, waitlist, email collection or purchase CTA until a real destination exists.

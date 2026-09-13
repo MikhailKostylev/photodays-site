@@ -1,0 +1,6 @@
+---
+import { topics } from '../data/topics';
+interface Props { exclude?: string }
+const { exclude } = Astro.props;
+---
+<div class="topic-links">{topics.filter(topic => topic.path !== exclude).map((topic) => <a class="topic-link" href={topic.path}><span class="topic-number">{topic.number}</span><div><h3>{topic.label}</h3><p>{topic.teaser}</p></div><span class="topic-arrow" aria-hidden="true">↗</span></a>)}</div>

@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { siteConfig } from '../config';
 
-const routes = ['/', '/privacy/', '/terms/', '/support/'] as const;
+import { canonicalRoutes as routes } from '../data/topics';
 
 export const GET: APIRoute = () => {
 	const body = `<?xml version="1.0" encoding="UTF-8"?>

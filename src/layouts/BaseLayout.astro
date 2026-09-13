@@ -8,14 +8,16 @@ interface Props {
 	canonicalPath: string;
 	isHome?: boolean;
 	noindex?: boolean;
+	breadcrumbLabel?: string;
 }
 
-const { title, description, canonicalPath, isHome = false, noindex = false } = Astro.props;
+const { title, description, canonicalPath, isHome = false, noindex = false, breadcrumbLabel } = Astro.props;
 const canonicalUrl = new URL(canonicalPath, siteConfig.siteUrl).toString();
 const ogImage = new URL('/og.png', siteConfig.siteUrl).toString();
-const structuredData = isHome ? {
+const appData = isHome ? {
 	'@context': 'https://schema.org',
 	'@type': 'SoftwareApplication',
+	'@id': `${siteConfig.siteUrl}/#app`,
 	name: siteConfig.name,
 	applicationCategory: 'LifestyleApplication',
 	operatingSystem: 'iOS, iPadOS',
@@ -23,6 +25,14 @@ const structuredData = isHome ? {
 	url: siteConfig.siteUrl,
 	...(siteConfig.appStoreUrl ? { installUrl: siteConfig.appStoreUrl } : {}),
 } : null;
+const breadcrumbData = breadcrumbLabel ? {
+ '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+ itemListElement: [
+  { '@type': 'ListItem', position: 1, name: 'PhotoDays', item: `${siteConfig.siteUrl}/` },
+  { '@type': 'ListItem', position: 2, name: breadcrumbLabel, item: canonicalUrl },
+ ],
+} : null;
+const structuredData = [appData, breadcrumbData].filter(Boolean);
 ---
 
 <!doctype html>
@@ -33,8 +43,7 @@ const structuredData = isHome ? {
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		{noindex && <meta name="robots" content="noindex, follow" />}
-		<meta name="theme-color" content="#f7f2e9" media="(prefers-color-scheme: light)" />
-		<meta name="theme-color" content="#11100f" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#ffffff" />
 		<link rel="canonical" href={canonicalUrl} />
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -45,13 +54,16 @@ const structuredData = isHome ? {
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="PhotoDays photo diary for iPhone and iPad" />
 		<meta property="og:locale" content="en_US" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImage} />
 		<title>{title}</title>
-		{structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+		{structuredData.map(data => <script type="application/ld+json" set:html={JSON.stringify(data).replaceAll("<", "\\u003c")} />)}
 	</head>
 	<body>
 		<a class="skip-link" href="#main-content">Skip to content</a>
