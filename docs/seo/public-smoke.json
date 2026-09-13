@@ -1,0 +1,94 @@
+{
+  "checked_at_utc": "2026-09-13T20:57:31.165543+00:00",
+  "deployment_commit": "e901f9731d0b6d0403c60a7dfa07d94ba7e91d33",
+  "dns_override": false,
+  "https_checks": [
+    {
+      "path": "/",
+      "status_tls": "200 0",
+      "title": "PhotoDays \u2014 Photo Diary &amp; Progress Tracker for iPhone",
+      "body": null,
+      "error": null
+    },
+    {
+      "path": "/photo-diary/",
+      "status_tls": "200 0",
+      "title": "Daily Photo Diary &amp; Photo Journal for iPhone | PhotoDays",
+      "body": null,
+      "error": null
+    },
+    {
+      "path": "/progress-photos/",
+      "status_tls": "200 0",
+      "title": "Progress Photo Tracker for iPhone &amp; iPad | PhotoDays",
+      "body": null,
+      "error": null
+    },
+    {
+      "path": "/photo-progress-video/",
+      "status_tls": "200 0",
+      "title": "Photo Progress Videos &amp; Photo Time Lapse | PhotoDays",
+      "body": null,
+      "error": null
+    },
+    {
+      "path": "/privacy/",
+      "status_tls": "200 0",
+      "title": "Privacy Policy \u2014 PhotoDays",
+      "body": null,
+      "error": null
+    },
+    {
+      "path": "/terms/",
+      "status_tls": "200 0",
+      "title": "Terms of Use \u2014 PhotoDays",
+      "body": null,
+      "error": null
+    },
+    {
+      "path": "/support/",
+      "status_tls": "200 0",
+      "title": "Support \u2014 PhotoDays",
+      "body": null,
+      "error": null
+    },
+    {
+      "path": "/sitemap.xml",
+      "status_tls": "200 0",
+      "title": null,
+      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url><loc>https://photodays.app/</loc></url>\n  <url><loc>https://photodays.app/photo-diary/</loc></url>\n  <url><loc>https://photodays.app/progress-photos/</loc></url>\n  <url><loc>https://photodays.app/photo-progress-video/</loc></url>\n  <url><loc>https://photodays.app/privacy/</loc></url>\n  <url><loc>https://photodays.app/terms/</loc></url>\n  <url><loc>https://photodays.app/support/</loc></url>\n</urlset>",
+      "error": null
+    },
+    {
+      "path": "/robots.txt",
+      "status_tls": "200 0",
+      "title": null,
+      "body": "User-agent: *\nAllow: /\n\nSitemap: https://photodays.app/sitemap.xml\n",
+      "error": null
+    },
+    {
+      "path": "/googleacb1539d6b9becef.html",
+      "status_tls": "200 0",
+      "title": null,
+      "body": "google-site-verification: googleacb1539d6b9becef.html\n",
+      "error": null
+    },
+    {
+      "path": "/ru/",
+      "status_tls": "200 0",
+      "title": "PhotoDays \u2014 Redirecting",
+      "body": null,
+      "error": null
+    }
+  ],
+  "http_redirect": {
+    "status": 301,
+    "location": "https://photodays.app/"
+  },
+  "www_https_redirect": {
+    "status": 301,
+    "location": "https://photodays.app/",
+    "tls_validation": "passed",
+    "checked_at_utc": "2026-09-13T21:04:55Z"
+  }
+}

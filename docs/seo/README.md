@@ -39,7 +39,7 @@ Do not run refresh, research, scheduled checks or any DataForSEO request that mi
 
 Use the existing Google account and URL-prefix property `https://photodays.app/`. Its owner-verification file is `public/googleacb1539d6b9becef.html`; keep it published after verification. This value was issued by Search Console for this property during the release work.
 
-After deployment:
+Release outcomes are recorded in `launch-status.md`. For future releases:
 
 1. Confirm ownership using the HTML-file method.
 2. Submit `https://photodays.app/sitemap.xml` in Sitemaps.
@@ -49,6 +49,8 @@ After deployment:
 ## Compare after 28 days
 
 This is a manual review checklist; no background automation or paid rank checks are enabled.
+
+For this release, the first complete 28-day Search Console reporting window is September 14–October 11, 2026; review it from October 12 once data is processed. Keep the report’s date/timezone convention consistent.
 
 Use Search Console → Performance → Search results → Web. Compare the first 28 complete days after deployment with the preceding 28 days, if historical data exists. For a new property, keep the first window as baseline and compare against the next complete 28-day window.
 
