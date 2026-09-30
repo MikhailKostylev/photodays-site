@@ -8,7 +8,7 @@ import { siteConfig } from '../../config';
 	description="Learn how the PhotoDays iOS and iPadOS app processes photos, progress data, analytics, diagnostics and support information."
 	canonicalPath="/privacy/"
 	heading="Privacy Policy"
-	effective="Effective September 17, 2026"
+	effective="Effective September 30, 2026"
 >
 	<p>PhotoDays is provided by an independent developer (“PhotoDays”, “we”, “us”). This policy explains what information the PhotoDays app and website process, why it is processed and the choices available to you.</p>
 
@@ -31,6 +31,13 @@ import { siteConfig } from '../../config';
 
 	<h2>Photos, camera, notifications and biometrics</h2>
 	<p>PhotoDays requests access only when you use a feature that needs it. Camera and photo-library access let you capture, import, save and display media. Notification access is used for reminders and related app experiences. Biometric authentication is performed by iOS; PhotoDays receives only the authentication result and does not receive or store Face ID or Touch ID data.</p>
+
+	<h2 id="face-alignment">On-device face processing and alignment cache</h2>
+	<p>When aligning photos for comparison or video creation, including morph transitions, PhotoDays uses Apple's Vision framework on your device. It calculates face rectangles, eye positions, face angle, detection confidence and visual feature representations of face regions. These derived results help center and align a face and select a visually similar face region when a photo contains several faces. They are not used to identify a person, authenticate you, build an identity database or infer sensitive characteristics.</p>
+	<p>Calculations happen locally. PhotoDays does not upload these derived face results to its servers or send them to RevenueCat, Amplitude, Sentry or Canny. Original photos may contain faces; if you enable iCloud Sync, those original photos can sync through your private Apple iCloud account. This is separate from the local alignment cache, which is excluded from iCloud synchronization and device backups and uses iOS file protection.</p>
+	<p>To avoid repeating the same calculations, the app stores derived results with the photo identifier, image revision and computation date. A cached result is valid for 30 days from computation; reading it does not restart this period. Expired results are removed when the app next starts or checks the cache. If the app is closed, physical removal occurs at the next launch or earlier if iOS clears the cache. A result may be computed again later if you use alignment.</p>
+	<p>Changing the source image invalidates its previous results. Deleting a photo or album removes the associated results from memory and disk; this also applies when the app receives an iCloud deletion. In Settings, under Storage, you can choose “Clear temporary data” to remove all cached alignment results without deleting photos. Results can then be recalculated when needed. On update from a version without these retention rules, the app removes its older alignment cache without changing original media or your settings.</p>
+	<p>When you choose to export or share a comparison or video, PhotoDays creates the requested media and sends it only to the destination or application you select. The alignment-cache records themselves are not included in exports. This face-processing feature is separate from Face ID: PhotoDays receives only the result of the system's authentication and has no access to Face ID biometric templates.</p>
 
 	<h2>Purchases</h2>
 	<p>Purchases and subscriptions are processed by Apple. We use <a href="https://www.revenuecat.com/privacy-policy">RevenueCat</a> to validate purchases, restore access, and determine Premium status. RevenueCat processes an anonymous customer identifier, Apple purchase and transaction information, product and subscription status, storefront, Apple’s identifier for vendor (IDFV) when available, and technical app/device information needed to provide this service. Neither PhotoDays nor RevenueCat receives your full payment-card details from Apple. No PhotoDays account registration is required. These pseudonymous identifiers can associate activity and purchases with the same customer or device; restoring a purchase can reconnect an earlier purchase record after reinstalling the app.</p>
